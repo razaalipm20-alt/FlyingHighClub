@@ -1,0 +1,25 @@
+# The Flying High Club — all search engines and AI assistants are welcome.
+User-agent: *
+Allow: /
+
+# AI crawlers, listed explicitly so there is no doubt they may read the site
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://www.theflyinghighclub.com/sitemap.xml

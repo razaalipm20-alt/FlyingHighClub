@@ -1,0 +1,3 @@
+# Old site paths → new homepage (Cloudflare Pages)
+/podcast   /#episodes   301
+/podcast/  /#episodes   301

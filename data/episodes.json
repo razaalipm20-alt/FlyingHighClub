@@ -1,0 +1,335 @@
+[
+  {
+    "guid": "guid-01",
+    "match": "Flight or Fright",
+    "title": "Flight or fright: the travel industry's biggest problem",
+    "guest": "Glenn Morgan",
+    "role": "",
+    "company": "",
+    "summary": "The first episode: unmasking the biggest problems travellers face.",
+    "quote": "",
+    "topics": [
+      "travel",
+      "disruption",
+      "customer"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": "",
+    "number": 1
+  },
+  {
+    "guid": "guid-02",
+    "match": "Beyond the Status Quo",
+    "title": "Beyond the status quo: transforming travel",
+    "guest": "Sohail Ali",
+    "role": "Airline operations",
+    "company": "",
+    "summary": "An airline operations insider on the untapped potential to improve how travel works.",
+    "quote": "",
+    "topics": [
+      "operations",
+      "airline",
+      "disruption"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": "",
+    "number": 2
+  },
+  {
+    "guid": "276f16b2-818c-49e5-bf80-61b92d2a72d2",
+    "match": "",
+    "title": "Breaking boundaries: achieve what is right for you",
+    "guest": "Javed Malik",
+    "role": "",
+    "company": "",
+    "summary": "Challenging expectations and building a career on your own terms.",
+    "quote": "",
+    "topics": [
+      "career",
+      "personal development",
+      "resilience"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "99892c28-01da-4f23-9b82-6cbba1ec6bfd",
+    "match": "",
+    "title": "Runway to viral airwaves: engineer turned TikTok sensation",
+    "guest": "Mohammad Taher",
+    "role": "Engineer and creator",
+    "company": "",
+    "summary": "How an engineer built a large TikTok following by showing what really happens behind the scenes at airports.",
+    "quote": "",
+    "topics": [
+      "tiktok",
+      "airports",
+      "social media",
+      "engineering",
+      "creator"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "b791383a-ae97-4fa7-ab40-481459ba7523",
+    "match": "",
+    "title": "Flight to a greener future: inside sustainable aviation",
+    "guest": "Jonathon Counsell",
+    "role": "Group Head of Sustainability",
+    "company": "IAG",
+    "summary": "The strategies, setbacks and future of sustainable aviation from inside one of the world's largest airline groups.",
+    "quote": "",
+    "topics": [
+      "sustainability",
+      "saf",
+      "net zero",
+      "iag",
+      "environment"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "77332553-80fe-4296-96bd-70c27f011973",
+    "match": "",
+    "title": "AI will change the game in travel",
+    "guest": "Daniel Williams",
+    "role": "CTO, Travel",
+    "company": "Microsoft UK",
+    "summary": "How artificial intelligence is reshaping travel, from booking and operations to the passenger experience.",
+    "quote": "AI will change the game in travel.",
+    "topics": [
+      "ai",
+      "microsoft",
+      "technology",
+      "data"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "fa1f01d4-c388-48a7-8584-1637f08b3053",
+    "match": "",
+    "title": "Airlines are being held back from being amazing",
+    "guest": "Bill McKimm",
+    "role": "Industry innovation connector",
+    "company": "",
+    "summary": "Innovation, collaboration and the art of pivoting, and what is holding airlines back.",
+    "quote": "Airlines are being held back from being amazing!",
+    "topics": [
+      "innovation",
+      "pivoting",
+      "collaboration"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "ef246bbd-7bb4-4282-9497-e7e96679f798",
+    "match": "",
+    "title": "The meteoric rise of the youngest C-level at British Airways",
+    "guest": "Ben Sehovic",
+    "role": "Youngest C-level executive",
+    "company": "British Airways",
+    "summary": "The ambition, curiosity and decisions behind becoming one of the youngest C-level executives at British Airways.",
+    "quote": "",
+    "topics": [
+      "british airways",
+      "career",
+      "leadership",
+      "c-suite"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "f9dfbe4a-ca19-4d8d-a5b1-b96af2fd1087",
+    "match": "",
+    "title": "Behind the scenes of the world's largest aviation conference",
+    "guest": "Daniel Boyle",
+    "role": "General Manager, Transport",
+    "company": "Terrapin (World Aviation Festival)",
+    "summary": "How the World Aviation Festival grew from 200 attendees to 5,000, and how the events industry came through the pandemic.",
+    "quote": "",
+    "topics": [
+      "events",
+      "conference",
+      "world aviation festival",
+      "waf",
+      "covid"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "d3b786c7-eb24-4539-bde7-c5e0150b022e",
+    "match": "",
+    "title": "Being a female founder brings its own unique challenges",
+    "guest": "Irra Ariella Khi",
+    "role": "Founder & CEO",
+    "company": "Zamna",
+    "summary": "Building a high-growth travel-tech company as a female founder, and the resilience it takes to break barriers.",
+    "quote": "",
+    "topics": [
+      "founder",
+      "startup",
+      "women",
+      "identity",
+      "technology"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "8dd73977-f63b-48ca-9245-dbcda68fdc0b",
+    "match": "",
+    "title": "This year is all about fixing the basics",
+    "guest": "Steven Greenway",
+    "role": "CEO",
+    "company": "flyadeal",
+    "summary": "The CEO of Saudi low-cost carrier flyadeal on why getting the fundamentals right comes first.",
+    "quote": "This year is all about fixing the basics.",
+    "topics": [
+      "low cost",
+      "saudi",
+      "airline",
+      "operations"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "a5a1b58c-7ca1-441f-89da-5bc54f6bbb5e",
+    "match": "",
+    "title": "Changing how travellers give feedback to the industry",
+    "guest": "Sam Chui",
+    "role": "Aviation creator and travel blogger",
+    "company": "",
+    "summary": "Why flying still feels magical, why airlines need to listen to passengers, and the launch of Sam's new platform for airline customer feedback.",
+    "quote": "I want to change how we review and feedback to the travel industry to help the customer.",
+    "topics": [
+      "influencer",
+      "feedback",
+      "nps",
+      "passenger experience",
+      "creator"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "2c3437d1-6b9b-4324-a21a-e90ab26e387d",
+    "match": "",
+    "title": "The real reason why airlines go bankrupt",
+    "guest": "Willie Walsh",
+    "role": "Director General",
+    "company": "IATA",
+    "summary": "IATA's Director General on the trends shaping global air travel, the challenges ahead for airlines, and the debate over a third runway at Heathrow. Recorded at the World Aviation Festival, Lisbon 2025.",
+    "quote": "",
+    "topics": [
+      "iata",
+      "heathrow",
+      "third runway",
+      "regulation",
+      "airlines",
+      "trends"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "6cbda2a6-dbf0-48a6-a58e-11a036771f61",
+    "match": "",
+    "title": "Behind loyalty: how Emirates truly wins the customer",
+    "guest": "Nejib Ben-Khedher",
+    "role": "Senior Vice President",
+    "company": "Emirates Skywards",
+    "summary": "What airline loyalty really means beyond points and perks, and how Emirates Skywards uses data and personalisation to put the customer first.",
+    "quote": "",
+    "topics": [
+      "loyalty",
+      "emirates",
+      "skywards",
+      "customer experience",
+      "personalisation"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "1c2870de-8f92-450d-bd57-d8f10690cc2c",
+    "match": "",
+    "title": "The bet that doubled Swissport's growth",
+    "guest": "Warwick Brady",
+    "role": "CEO & President",
+    "company": "Swissport",
+    "summary": "How simple principles and people-first leadership turned around and scaled one of the world's biggest airport ground-services businesses.",
+    "quote": "",
+    "topics": [
+      "ground handling",
+      "airports",
+      "leadership",
+      "turnaround",
+      "operations"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "e2bebb65-60af-48f0-a068-8c9fcf113d94",
+    "match": "",
+    "title": "The real challenges facing airlines across Africa",
+    "guest": "George Kamal",
+    "role": "CEO",
+    "company": "Kenya Airways",
+    "summary": "The opportunity and the obstacles in African aviation, how AI and technology can help African carriers grow, and leading in a complex, high-growth market.",
+    "quote": "",
+    "topics": [
+      "africa",
+      "kenya",
+      "ai",
+      "leadership",
+      "airline"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  },
+  {
+    "guid": "1a7faf70-c23b-4eeb-ac92-36fb8e4d76ff",
+    "match": "",
+    "title": "Inside Air Sheriff: how airports are securing airspace",
+    "guest": "Gary McDonald & Maurice Jenkins",
+    "role": "President North America, Air Sheriff · Chief Innovation Officer, Miami International Airport",
+    "company": "",
+    "summary": "A startup and its airport customer, side by side: how Miami International Airport adopted Air Sheriff's technology to protect its airspace from unauthorised drones.",
+    "quote": "",
+    "topics": [
+      "drones",
+      "airspace",
+      "security",
+      "airports",
+      "startup",
+      "miami"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": ""
+  }
+]
