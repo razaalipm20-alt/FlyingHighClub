@@ -51,6 +51,10 @@ LINKS = {
 }
 CONTACT_EMAIL = "raza.ali@theflyinghighclub.com"
 
+# Use downloaded episode artwork / YouTube thumbnails on the roster when a guest
+# has no styled photo yet. Off = cards show the guest's initials instead.
+USE_AUTO_ARTWORK = False
+
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 INDEX = SITE / "index.html"
@@ -466,6 +470,10 @@ def build_js(eps, live):
     }
     if live:
         data["liveStats"] = live
+    logo_dir = SITE / "logos"
+    if logo_dir.exists():
+        data["logos"] = {re.sub(r"[^a-z0-9]+", "-", f.stem.lower()).strip("-"): f"logos/{f.name}"
+                         for f in sorted(logo_dir.iterdir()) if f.suffix.lower() in {".png", ".svg", ".webp", ".jpg", ".jpeg"}}
     return "const AUTO = " + json.dumps(data, ensure_ascii=False, indent=1).replace("</", "<\\/") + ";"
 
 
@@ -510,8 +518,36 @@ def replace_block(text, name, new, js=False):
     return pat.sub(lambda m: m.group(1) + new + m.group(2), text, count=1)
 
 
+def trim_logos():
+    """Crop empty transparent padding from logo files so they display at a sensible size."""
+    d = SITE / "logos"
+    if not d.exists():
+        return
+    try:
+        from PIL import Image
+    except ImportError:
+        return
+    for f in d.iterdir():
+        if f.suffix.lower() not in {".png", ".webp"}:
+            continue
+        try:
+            im = Image.open(f)
+            if im.mode not in ("RGBA", "LA", "P"):
+                continue
+            im = im.convert("RGBA")
+            box = im.split()[-1].point(lambda v: 255 if v > 8 else 0).getbbox()
+            if box and (box[2] - box[0] < im.width - 6 or box[3] - box[1] < im.height - 6):
+                pad = 4
+                box = (max(0, box[0] - pad), max(0, box[1] - pad), min(im.width, box[2] + pad), min(im.height, box[3] + pad))
+                im.crop(box).save(f)
+                log("trimmed logo padding:", f.name)
+        except Exception as e:
+            log("could not trim", f.name, e)
+
+
 # ── Main ────────────────────────────────────────────────────────────────────
 def main():
+    trim_logos()
     # 1. Feeds
     try:
         rss_text = Path(RSS_FILE).read_text() if RSS_FILE else fetch(RSS_URL)
@@ -587,7 +623,7 @@ def main():
                 log(f'matched YouTube video for EP {ep["number"]}: {v["title"]}')
 
         # Artwork: your photo > RSS episode art > YouTube thumbnail
-        if not ep["photo"]:
+        if not ep["photo"] and USE_AUTO_ARTWORK:
             dest = AUTO_IMG_DIR / f'ep-{ep["number"]:02d}.jpg'
             src = it["image"] or (f'https://i.ytimg.com/vi/{ep["youtube"].split("v=")[-1]}/maxresdefault.jpg' if ep["youtube"] else "")
             ok = dest.exists() or (src and download_image(src, dest))

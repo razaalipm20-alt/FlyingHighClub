@@ -12,14 +12,25 @@ Every 6 hours a GitHub Action (`.github/workflows/update-site.yml`) runs `script
 
 Run it now: **Actions → Update site from podcast feed → Run workflow**.
 
+## Guest photos and company logos (automatic)
+1. **Logo:** upload the company's logo to `site/logos/`, named after the company: `kenya-airways.png`, `swissport.png`, `iata.png`. Transparent PNG works best. Empty space around it is trimmed automatically.
+2. **Photo:** upload the guest's photo to `photos/`, named after the guest: `george-kamal.jpg`.
+
+That's it. The **Style guest photos** action cuts the person out, makes them black & white on the FHC navy, adds their company logo top-right, attaches the photo to their episode and refreshes the site. The logo also appears in the "Guests have joined us from" carousel automatically.
+
+How the right logo is chosen, in order:
+- **File-name override:** `person--logo.jpg`, e.g. `sam-chui--emirates.jpg` uses `site/logos/emirates.png`; `warwick-brady--none.jpg` = no logo.
+- **`"logo"` in data/episodes.json** for that episode, if you've set one.
+- **Automatic:** the logo whose name appears in the guest's company (or job title). Small words like UK / Group / Ltd are ignored, so `microsoft.png` matches "Microsoft UK". In two-guest episodes each person gets their own company.
+
+Adding a logo later also updates the photos already on the site. After each run, open the action to see a table of who got which logo and why, including anything it couldn't match.
+
 ## What you edit by hand
 | To change… | Edit |
 |---|---|
 | A guest's name, role, company, quote, summary, search topics | `data/episodes.json` |
-| A guest headshot | upload to `site/guests/`, then set `"photo": "guests/file.jpg"` in `data/episodes.json` (optional `"photoPosition": "center 20%"` to adjust the crop) |
-| Audience stats, cockpit numbers, links, form email, map cities, guest-company logos | the `SITE CONFIG` block near the bottom of `site/index.html` |
-| Company logos | upload to `site/logos/` and set `logo:` in `guestCompanies` |
+| Audience stats, cockpit numbers, links, form email, map cities, carousel company list | the `SITE CONFIG` block near the bottom of `site/index.html` |
 
 New episodes are added to `data/episodes.json` with `"auto": true` and a best-guess guest name and role taken from the title. Check them, fix anything, and delete the `"auto": true` line once you're happy. Your edits are never overwritten.
 
-**Don't edit** anything between `AUTO:…:START` and `AUTO:…:END` markers in `index.html`; the script rewrites those.
+**Don't edit** anything between `AUTO:…:START` and `AUTO:…:END` markers in `index.html`; the scripts rewrite those.

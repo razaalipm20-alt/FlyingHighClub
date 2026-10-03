@@ -1,1 +1,1 @@
-Put guest company logos here (see SITE CONFIG → guestCompanies → logo).
+Upload logos here, named after the company (kenya-airways.png). Matched to guests automatically.
