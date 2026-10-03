@@ -1,12 +1,11 @@
 name: Update site from podcast feed
 
 on:
-     on:
-     push:
-       paths:
-         - "data/**"
-     schedule:
-    - cron: "17 * * * *"        # every 6 hours
+  push:
+    paths:
+      - "data/**"
+  schedule:
+    - cron: "17 * * * *"          # every hour
   workflow_dispatch:               # "Run workflow" button in the Actions tab
   repository_dispatch:             # lets your Flask app trigger an instant update
     types: [new-episode]
@@ -22,9 +21,9 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
