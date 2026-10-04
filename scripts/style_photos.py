@@ -135,21 +135,42 @@ def resolve_logo(person, hint, eps, logos):
 
 
 def white_logo(path, max_w=210, max_h=100):
-    """Turn any logo into a white mark. Dark parts become solid white, light parts (e.g. a grey
-    plane over blue letters) become softer white, so internal details stay visible."""
+    """Turn any logo file into a white mark for the navy photos. Handles:
+      • transparent PNGs in colour (two-tone: dark parts solid, light parts softer, so details survive)
+      • logos that are already white (kept at full strength)
+      • logos on a solid background box of any colour (background removed using the colour at the edges)"""
     lg = Image.open(path).convert("RGBA")
     a = np.array(lg).astype(float)
-    if a[..., 3].min() == 255:  # no transparency: treat near-white as background
-        bgmask = (a[..., :3].sum(axis=2) > 720)
-        a[..., 3] = np.where(bgmask, 0, 255)
-    lum = (0.2126 * a[..., 0] + 0.7152 * a[..., 1] + 0.0722 * a[..., 2]) / 255
-    a[..., 3] = a[..., 3] * np.clip(1.3 - lum, 0.42, 1.0)
+    rgb, alpha = a[..., :3], a[..., 3]
+    if (alpha < 250).mean() < 0.02:
+        # no real transparency: use the colour around the edges as the background
+        border = np.concatenate([rgb[0], rgb[-1], rgb[:, 0], rgb[:, -1]])
+        bg = np.median(border, axis=0)
+        dist = np.sqrt(((rgb - bg) ** 2).sum(axis=2))
+        alpha = np.clip((dist - 30) * 4, 0, 255)
+        bg_lum = (0.2126 * bg[0] + 0.7152 * bg[1] + 0.0722 * bg[2]) / 255
+    else:
+        bg_lum = None
+    lum = (0.2126 * rgb[..., 0] + 0.7152 * rgb[..., 1] + 0.0722 * rgb[..., 2]) / 255
+    visible = alpha > 20
+    if not visible.any():
+        raise ValueError("logo file looks empty")
+    mean_lum = lum[visible].mean()
+    if bg_lum is not None:
+        # strength = how far each pixel is from the background colour
+        contrast = np.abs(lum - bg_lum)
+        strength = np.clip(contrast / max(0.15, contrast[visible].max()), 0.42, 1.0)
+    elif mean_lum > 0.72:
+        strength = np.ones_like(lum)                       # already a white / light logo: keep it solid
+    else:
+        strength = np.clip(1.3 - lum, 0.42, 1.0)          # colour logo: two-tone
+    a[..., 3] = alpha * strength
     a[..., :3] = 255
-    lg = Image.fromarray(a.astype("uint8"))
-    box = lg.split()[-1].point(lambda v: 255 if v > 8 else 0).getbbox()
-    lg = lg.crop(box) if box else lg
-    lg.thumbnail((max_w, max_h), Image.LANCZOS)
-    return lg
+    out = Image.fromarray(a.clip(0, 255).astype("uint8"))
+    box = out.split()[-1].point(lambda v: 255 if v > 8 else 0).getbbox()
+    out = out.crop(box) if box else out
+    out.thumbnail((max_w, max_h), Image.LANCZOS)
+    return out
 
 
 def add_logo(img, logo_path, slot_right=None):
@@ -236,7 +257,10 @@ def compose(subjects, logos, dst):
     for i, subj in enumerate(subjects):
         place(canvas, subj, i * W, W, head_w)
         if logos[i]:
-            add_logo(canvas, logos[i], slot_right=(i + 1) * W)
+            try:
+                add_logo(canvas, logos[i], slot_right=(i + 1) * W)
+            except Exception as e:
+                print(f"[photos] logo {Path(str(logos[i])).name} could not be used ({e}) — photo made without it")
     arr = np.array(canvas.convert("RGB")).astype(float)
     yy = np.linspace(0, 1, H)[:, None]
     fade = np.clip((yy - 0.82) / 0.18, 0, 1) * 0.55
