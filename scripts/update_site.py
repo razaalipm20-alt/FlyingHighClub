@@ -202,7 +202,7 @@ def parse_youtube(xml_text):
 
 
 # ── Helpers for new episodes ────────────────────────────────────────────────
-NOISE = re.compile(r"(?i)\s*[|\-–—:]\s*(the flying high club|fhc\b.*|flying high club x .*|series \d+.*)$")
+NOISE = re.compile(r"(?i)\s*[|\-–—:]+\s*((the )?flying high club( podcast| afa)?( x .*)?|fhc\b.*|series \d+.*|afa 20\d\d.*|aviation festival asia)\s*$")
 
 
 def clean_title(t):
@@ -547,7 +547,7 @@ def build_js(eps, live):
     latest = eps[-1]
     js_eps = []
     for ep in reversed(eps):
-        js_eps.append({"number": f'{ep["number"]:02d}', "title": ep["title"], "guest": ep["guest"] or "The Flying High Club",
+        js_eps.append({"number": f'{ep["number"]:02d}', "title": ep["title"], "guest": ep["guest"] or ep["company"] or "The Flying High Club",
                        "role": ep["role"], "company": ep["company"], "photo": file_version(ep["photo"]) if ep["photo"] else "", "photoPosition": ep.get("photoPosition", ""),
                        "quote": ep["quote"], "topics": ep["topics"], "url": ep["watch"], "youtube": ep["youtube"], "spotify": ep.get("spotify", ""),
                        **({"youtubeOnly": True} if ep.get("youtubeOnly") else {}),
@@ -801,17 +801,29 @@ def main():
                 guest = guess_guest(v["title"], v["description"])
                 t, role, company = split_title(v["title"], guest)
                 d = {"youtubeOnly": True, "auto": True, "ytTitle": v["title"], "title": t,
+                     "ytPublished": v["published"], "ytSeconds": v["seconds"],
                      "guest": guest, "role": role, "company": company,
                      "summary": auto_summary(v["description"]), "quote": "", "topics": [],
                      "photo": "", "photoPosition": "", "youtube": f'https://www.youtube.com/watch?v={v["id"]}'}
                 data.append(d)
                 added += 1
                 log(f'NEW YouTube episode (not on Spotify yet): "{t}" (guest guess: {guest or "?"})')
+            d["ytPublished"], d["ytSeconds"] = v["published"], v["seconds"]     # keep fresh for key-less runs
             used_vids.add(v["id"])
             mins = round(v["seconds"] / 60)
             iso = f'PT{v["seconds"] // 3600}H{v["seconds"] % 3600 // 60}M' if v["seconds"] >= 3600 else f'PT{v["seconds"] // 60}M'
             eps.append(make_ep(d, title=v["title"], desc=v["description"], date=v["published"], iso=iso,
                                dur=f"{mins} min", link="", image=""))
+
+    elif YOUTUBE_FIRST_EPISODES:
+        # no YouTube key in this run (e.g. the photo workflow): keep the saved YouTube-only episodes on the site
+        for d in data:
+            if not d.get("youtubeOnly") or not d.get("youtube") or not d.get("ytPublished"):
+                continue                       # date not known yet; the next run with the key fills it in
+            sec = int(d.get("ytSeconds") or 0)
+            iso = (f"PT{sec // 3600}H{sec % 3600 // 60}M" if sec >= 3600 else f"PT{sec // 60}M") if sec else ""
+            eps.append(make_ep(d, title=d.get("ytTitle") or d.get("title", ""), desc="", date=d.get("ytPublished", ""),
+                               iso=iso, dur=f"{round(sec / 60)} min" if sec else "", link="", image=""))
 
     # 2c. numbering by publish date (your "number" overrides win), links, artwork
     eps.sort(key=lambda e: (e["date"] or "0000", e["number"]))
