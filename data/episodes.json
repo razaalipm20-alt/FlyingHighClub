@@ -16,7 +16,8 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "",
-    "number": 1
+    "number": 1,
+    "artwork": "guests/auto/art-guid01.jpg"
   },
   {
     "guid": "guid-02",
@@ -35,7 +36,8 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "",
-    "number": 2
+    "number": 2,
+    "artwork": "guests/auto/art-guid02.jpg"
   },
   {
     "guid": "276f16b2-818c-49e5-bf80-61b92d2a72d2",
@@ -53,7 +55,9 @@
     ],
     "photo": "guests/javed-malik.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload",
+    "artwork": "guests/auto/art-276f16b2818c49e5bf8061b9.jpg"
   },
   {
     "guid": "99892c28-01da-4f23-9b82-6cbba1ec6bfd",
@@ -73,7 +77,9 @@
     ],
     "photo": "guests/mohammad-taher.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload",
+    "artwork": "guests/auto/art-99892c2801da4f239b826cbb.jpg"
   },
   {
     "guid": "b791383a-ae97-4fa7-ab40-481459ba7523",
@@ -93,7 +99,9 @@
     ],
     "photo": "guests/jonathon-counsell.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload",
+    "artwork": "guests/auto/art-b791383aae974fa7ab404814.jpg"
   },
   {
     "guid": "77332553-80fe-4296-96bd-70c27f011973",
@@ -112,7 +120,8 @@
     ],
     "photo": "",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "artwork": "guests/auto/art-7733255380fe429696bd70c2.jpg"
   },
   {
     "guid": "fa1f01d4-c388-48a7-8584-1637f08b3053",
@@ -130,7 +139,8 @@
     ],
     "photo": "",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "artwork": "guests/auto/art-fa1f01d4c38848a785841637.jpg"
   },
   {
     "guid": "ef246bbd-7bb4-4282-9497-e7e96679f798",
@@ -149,7 +159,8 @@
     ],
     "photo": "",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "artwork": "guests/auto/art-ef246bbd7bb442829497e7e9.jpg"
   },
   {
     "guid": "f9dfbe4a-ca19-4d8d-a5b1-b96af2fd1087",
@@ -169,7 +180,8 @@
     ],
     "photo": "",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "artwork": "guests/auto/art-f9dfbe4aca194d8da5b1b96a.jpg"
   },
   {
     "guid": "d3b786c7-eb24-4539-bde7-c5e0150b022e",
@@ -189,7 +201,8 @@
     ],
     "photo": "",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "artwork": "guests/auto/art-d3b786c7eb244539bde7c5e0.jpg"
   },
   {
     "guid": "8dd73977-f63b-48ca-9245-dbcda68fdc0b",
@@ -208,7 +221,9 @@
     ],
     "photo": "guests/steven-greenway.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload",
+    "artwork": "guests/auto/art-8dd73977f63b48ca9245dbcd.jpg"
   },
   {
     "guid": "a5a1b58c-7ca1-441f-89da-5bc54f6bbb5e",
@@ -228,7 +243,9 @@
     ],
     "photo": "guests/sam-chui.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload",
+    "artwork": "guests/auto/art-a5a1b58c7ca1441f89da5bc5.jpg"
   },
   {
     "guid": "2c3437d1-6b9b-4324-a21a-e90ab26e387d",
@@ -249,7 +266,9 @@
     ],
     "photo": "guests/willie-walsh.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload",
+    "artwork": "guests/auto/art-2c3437d16b9b4324a21ae90a.jpg"
   },
   {
     "guid": "6cbda2a6-dbf0-48a6-a58e-11a036771f61",
@@ -269,7 +288,8 @@
     ],
     "photo": "guests/nejib-ben-khedher.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload"
   },
   {
     "guid": "1c2870de-8f92-450d-bd57-d8f10690cc2c",
@@ -289,7 +309,8 @@
     ],
     "photo": "guests/warwick-brady.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload"
   },
   {
     "guid": "e2bebb65-60af-48f0-a068-8c9fcf113d94",
@@ -309,7 +330,8 @@
     ],
     "photo": "guests/george-kamal.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload"
   },
   {
     "guid": "1a7faf70-c23b-4eeb-ac92-36fb8e4d76ff",
@@ -330,6 +352,7 @@
     ],
     "photo": "guests/maurice-jenkins.jpg",
     "photoPosition": "",
-    "youtube": ""
+    "youtube": "",
+    "photoSource": "upload"
   }
 ]
