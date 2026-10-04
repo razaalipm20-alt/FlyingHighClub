@@ -368,7 +368,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=oD2LHG1iNto",
-    "artwork": "guests/auto/art-oD2LHG1iNto.jpg"
+    "artwork": "guests/auto/art-oD2LHG1iNto.jpg",
+    "ytPublished": "2025-06-03",
+    "ytSeconds": 1853
   },
   {
     "youtubeOnly": true,
@@ -383,7 +385,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=CVsKICb6XFE",
-    "artwork": "guests/auto/art-CVsKICb6XFE.jpg"
+    "artwork": "guests/auto/art-CVsKICb6XFE.jpg",
+    "ytPublished": "2025-06-16",
+    "ytSeconds": 1522
   },
   {
     "youtubeOnly": true,
@@ -399,7 +403,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=jNhmpyjccOQ",
-    "artwork": "guests/auto/art-jNhmpyjccOQ.jpg"
+    "artwork": "guests/auto/art-jNhmpyjccOQ.jpg",
+    "ytPublished": "2026-01-22",
+    "ytSeconds": 1935
   },
   {
     "youtubeOnly": true,
@@ -414,7 +420,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=ymzGuMXL-Co",
-    "artwork": "guests/auto/art-ymzGuMXLCo.jpg"
+    "artwork": "guests/auto/art-ymzGuMXLCo.jpg",
+    "ytPublished": "2026-02-06",
+    "ytSeconds": 2666
   },
   {
     "youtubeOnly": true,
@@ -429,7 +437,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=RbA5V7o5m2A",
-    "artwork": "guests/auto/art-RbA5V7o5m2A.jpg"
+    "artwork": "guests/auto/art-RbA5V7o5m2A.jpg",
+    "ytPublished": "2026-02-17",
+    "ytSeconds": 1642
   },
   {
     "youtubeOnly": true,
@@ -445,7 +455,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=fRi9Y7_hqfY",
-    "artwork": "guests/auto/art-fRi9Y7hqfY.jpg"
+    "artwork": "guests/auto/art-fRi9Y7hqfY.jpg",
+    "ytPublished": "2026-03-15",
+    "ytSeconds": 1579
   },
   {
     "youtubeOnly": true,
@@ -460,7 +472,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=0E37G75OLk0",
-    "artwork": "guests/auto/art-0E37G75OLk0.jpg"
+    "artwork": "guests/auto/art-0E37G75OLk0.jpg",
+    "ytPublished": "2026-04-02",
+    "ytSeconds": 3314
   },
   {
     "youtubeOnly": true,
@@ -475,7 +489,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=b7lU4tBTHfQ",
-    "artwork": "guests/auto/art-b7lU4tBTHfQ.jpg"
+    "artwork": "guests/auto/art-b7lU4tBTHfQ.jpg",
+    "ytPublished": "2026-04-28",
+    "ytSeconds": 2399
   },
   {
     "youtubeOnly": true,
@@ -491,7 +507,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=BHAhQ4PfW1Y",
-    "artwork": "guests/auto/art-BHAhQ4PfW1Y.jpg"
+    "artwork": "guests/auto/art-BHAhQ4PfW1Y.jpg",
+    "ytPublished": "2026-05-28",
+    "ytSeconds": 2046
   },
   {
     "youtubeOnly": true,
@@ -507,7 +525,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=livhHhQCsnE",
-    "artwork": "guests/auto/art-livhHhQCsnE.jpg"
+    "artwork": "guests/auto/art-livhHhQCsnE.jpg",
+    "ytPublished": "2026-06-11",
+    "ytSeconds": 1738
   },
   {
     "youtubeOnly": true,
@@ -522,7 +542,9 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=G6Cvpd1vidM",
-    "artwork": "guests/auto/art-G6Cvpd1vidM.jpg"
+    "artwork": "guests/auto/art-G6Cvpd1vidM.jpg",
+    "ytPublished": "2026-07-03",
+    "ytSeconds": 2290
   },
   {
     "youtubeOnly": true,
@@ -538,6 +560,8 @@
     "photo": "",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=KeLAWzbWn5w",
-    "artwork": "guests/auto/art-KeLAWzbWn5w.jpg"
+    "artwork": "guests/auto/art-KeLAWzbWn5w.jpg",
+    "ytPublished": "2026-08-18",
+    "ytSeconds": 1930
   }
 ]
