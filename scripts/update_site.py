@@ -50,10 +50,21 @@ LINKS = {
     "rss": RSS_URL,
 }
 CONTACT_EMAIL = "raza.ali@theflyinghighclub.com"
+SPOTIFY_SHOW_ID = "4cdbL0Sl4aMqkJ8XMLs4x9"
 
-# Use downloaded episode artwork / YouTube thumbnails on the roster when a guest
-# has no styled photo yet. Off = cards show the guest's initials instead.
-USE_AUTO_ARTWORK = True
+# YouTube videos at least this long count as full episodes (shorter = clips / Shorts).
+FULL_EPISODE_MIN_MINUTES = 15
+# Create episodes for full-length YouTube videos that aren't on the podcast feed yet.
+YOUTUBE_FIRST_EPISODES = True
+# Ignore YouTube videos published before this date when creating YouTube-only episodes
+# (stops old uploads from before the podcast feed began turning into episodes).
+YOUTUBE_ONLY_SINCE = "2025-06-01"
+
+# Episode artwork (from the RSS feed, or the YouTube thumbnail) is always downloaded to
+# site/guests/auto/ and handed to the photo styler, which turns clean headshots into
+# branded photos with the company logo. USE_AUTO_ARTWORK = True would ALSO show the raw,
+# unstyled artwork for guests the styler couldn't use (e.g. thumbnails full of text).
+USE_AUTO_ARTWORK = False
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
@@ -243,7 +254,7 @@ def split_title(raw_title, guest):
             else:
                 continue
         if re.match(ROLE_WORDS, p) and len(p.split()) <= 8:
-            m = re.match(r"^(.*?%s[^,]*?)\s+(?:of|at|,)\s+(.+)$" % ROLE_WORDS, p)
+            m = re.match(r"^(.*?%s[^,]*?)\s*(?:,|\s+of\s+|\s+at\s+)\s*(.+)$" % ROLE_WORDS, p)
             m2 = re.match(r"^((?:%s)(?:\s*&\s*%s)?)\s+([A-Z].+)$" % (ROLE_WORDS, ROLE_WORDS), p)
             if m:
                 role, company = m.group(1).strip(), m.group(2).strip(" .")
@@ -260,6 +271,73 @@ def split_title(raw_title, guest):
 
 def norm(s):
     return re.sub(r"[^a-z0-9 ]", "", s.lower())
+
+
+def iso_dur_seconds(v):
+    m = re.fullmatch(r"P(?:(\d+)D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", v or "")
+    if not m:
+        return 0
+    d, h, mi, se = (int(x or 0) for x in m.groups())
+    return d * 86400 + h * 3600 + mi * 60 + se
+
+
+def youtube_api_videos(key):
+    """All uploads on the channel with duration, via the YouTube Data API (needs YOUTUBE_API_KEY)."""
+    uploads = "UU" + YT_CHANNEL_ID[2:]
+    items, token = [], ""
+    for _ in range(20):                                  # up to 1,000 videos
+        url = (f"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50"
+               f"&playlistId={uploads}&key={key}" + (f"&pageToken={token}" if token else ""))
+        j = json.loads(fetch(url))
+        for it in j.get("items", []):
+            sn = it["snippet"]
+            if sn.get("title") in ("Private video", "Deleted video"):
+                continue
+            items.append({"id": it["contentDetails"]["videoId"], "title": html.unescape(sn.get("title", "")),
+                          "description": sn.get("description", ""),
+                          "published": (it["contentDetails"].get("videoPublishedAt") or sn.get("publishedAt") or "")[:10]})
+        token = j.get("nextPageToken")
+        if not token:
+            break
+    for i in range(0, len(items), 50):
+        ids = ",".join(v["id"] for v in items[i:i + 50])
+        j = json.loads(fetch(f"https://www.googleapis.com/youtube/v3/videos?part=contentDetails,statistics,snippet&id={ids}&key={key}"))
+        info = {v["id"]: v for v in j.get("items", [])}
+        for v in items[i:i + 50]:
+            x = info.get(v["id"], {})
+            v["seconds"] = iso_dur_seconds(x.get("contentDetails", {}).get("duration", ""))
+            v["views"] = int(x.get("statistics", {}).get("viewCount", 0) or 0)
+            v["live"] = x.get("snippet", {}).get("liveBroadcastContent", "none") != "none"
+    return items
+
+
+def spotify_episodes(cid, secret):
+    """Spotify listener-page links for each episode (needs SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET)."""
+    import base64
+    req = urllib.request.Request("https://accounts.spotify.com/api/token", data=b"grant_type=client_credentials",
+                                 headers={**UA, "Authorization": "Basic " + base64.b64encode(f"{cid}:{secret}".encode()).decode(),
+                                          "Content-Type": "application/x-www-form-urlencoded"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        tok = json.loads(r.read())["access_token"]
+    out, url = [], f"https://api.spotify.com/v1/shows/{SPOTIFY_SHOW_ID}/episodes?market=GB&limit=50"
+    while url:
+        rq = urllib.request.Request(url, headers={**UA, "Authorization": f"Bearer {tok}"})
+        with urllib.request.urlopen(rq, timeout=30) as r:
+            j = json.loads(r.read())
+        out += [{"title": e.get("name", ""), "url": e.get("external_urls", {}).get("spotify", "")} for e in j.get("items", []) if e]
+        url = j.get("next")
+    return out
+
+
+def best_title_match(title, guest, candidates, key="title", threshold=0.72):
+    best, score = None, 0.0
+    for c in candidates:
+        r = difflib.SequenceMatcher(None, norm(title), norm(c[key])).ratio()
+        if guest and norm(guest) and norm(guest) in norm(c[key]):
+            r += 0.25
+        if r > score:
+            best, score = c, r
+    return best if score >= threshold else None
 
 
 def match_youtube(ep_title, guest, vids, used):
@@ -318,6 +396,19 @@ def who(ep):
     return ", ".join(x for x in [ep["role"], ep["company"]] if x)
 
 
+def platform_buttons(ep, cls="plat"):
+    out = []
+    if ep.get("youtube"):
+        out.append(f'<a class="{cls} {cls}-yt" href="{E(ep["youtube"])}" target="_blank" rel="noopener">'
+                   f'<span class="plat-ico plat-ico-play" aria-hidden="true"></span>Watch on YouTube</a>')
+    if ep.get("spotify"):
+        out.append(f'<a class="{cls} {cls}-sp" href="{E(ep["spotify"])}" target="_blank" rel="noopener">'
+                   f'<span class="plat-ico plat-ico-ear" aria-hidden="true"></span>Listen on Spotify</a>')
+    elif ep.get("youtubeOnly"):
+        out.append(f'<span class="{cls} {cls}-soon">Spotify soon</span>')
+    return "".join(out)
+
+
 def build_guide(eps):
     rows = []
     for ep in reversed(eps):
@@ -329,6 +420,7 @@ def build_guide(eps):
           <h3 class="ep-title"><a href="{E(ep["watch"])}" target="_blank" rel="noopener">{E(ep["title"])}</a></h3>
           <p class="ep-guest"><strong>{E(ep["guest"] or "The Flying High Club")}</strong>{(" — " + E(w)) if w else ""}</p>
           {f'<p class="ep-sum">{E(ep["summary"])}</p>' if ep["summary"] else ""}
+          <div class="ep-plats">{platform_buttons(ep, "ep-plat")}</div>
         </div>
         <div class="ep-meta">{E(meta)}</div>
       </li>''')
@@ -351,7 +443,7 @@ def build_latest(ep):
     </div>
 
     <div class="latest-card">
-      <div class="latest-art" data-ep="EP {ep["number"]}">
+      <div class="latest-art{" wide" if ep.get("duo") else ""}" data-ep="EP {ep["number"]}">
         {art}
       </div>
       <div class="latest-meta">
@@ -368,11 +460,7 @@ def build_latest(ep):
           </div>
         </div>
         <div class="latest-ctas">
-          <a class="btn btn-primary" data-latest-link href="{E(ep["watch"])}" target="_blank" rel="noopener">
-            <span class="play-icon"></span>
-            Play episode
-          </a>
-          <a class="btn-dark" href="{E(ep["link"] or ep["watch"])}" target="_blank" rel="noopener">Show notes</a>
+          {platform_buttons(ep, "lplat")}
         </div>
       </div>
     </div>
@@ -421,7 +509,7 @@ def build_jsonld(eps):
          "sameAs": same},
     ]
     for ep in eps:
-        node = {"@type": "PodcastEpisode", "name": ep["title"], "url": ep["link"] or ep["watch"],
+        node = {"@type": "PodcastEpisode", "name": ep["title"], "url": ep["spotify"] if ep.get("spotify") and ep["spotify"] != LINKS["spotify"] else ep["watch"],
                 "episodeNumber": ep["number"], "partOfSeries": {"@id": SITE_URL + "#podcast"}, "inLanguage": "en-GB"}
         if ep["summary"]:
             node["description"] = ep["summary"]
@@ -461,7 +549,9 @@ def build_js(eps, live):
     for ep in reversed(eps):
         js_eps.append({"number": f'{ep["number"]:02d}', "title": ep["title"], "guest": ep["guest"] or "The Flying High Club",
                        "role": ep["role"], "company": ep["company"], "photo": ep["photo"], "photoPosition": ep.get("photoPosition", ""),
-                       "quote": ep["quote"], "topics": ep["topics"], "url": ep["link"] or LINKS["spotify"], "youtube": ep["youtube"]})
+                       "quote": ep["quote"], "topics": ep["topics"], "url": ep["watch"], "youtube": ep["youtube"], "spotify": ep.get("spotify", ""),
+                       **({"youtubeOnly": True} if ep.get("youtubeOnly") else {}),
+                       **({"duo": True} if ep.get("duo") else {})})
     data = {
         "updated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
         "latestEpisode": {"title": latest["title"], "meta": " · ".join(x for x in [f'EP {latest["number"]}', latest["dur"].upper()] if x),
@@ -536,7 +626,7 @@ def trim_logos():
                 continue
             im = im.convert("RGBA")
             box = im.split()[-1].point(lambda v: 255 if v > 8 else 0).getbbox()
-            if box and (box[2] - box[0] < im.width - 6 or box[3] - box[1] < im.height - 6):
+            if box and (box[2] - box[0] < im.width - 12 or box[3] - box[1] < im.height - 12):
                 pad = 4
                 box = (max(0, box[0] - pad), max(0, box[1] - pad), min(im.width, box[2] + pad), min(im.height, box[3] + pad))
                 im.crop(box).save(f)
@@ -558,14 +648,24 @@ def main():
     if not items:
         log("RSS feed had no episodes, leaving the site unchanged.")
         return 0
-    try:
-        vids = parse_youtube(Path(YT_FILE).read_text() if YT_FILE else fetch(YT_FEED_URL))
-    except Exception as e:
-        log("YouTube feed unavailable (episodes will link to Spotify):", e)
-        vids = []
+    key = os.environ.get("YOUTUBE_API_KEY")
+    api_vids = None
+    if key:
+        try:
+            api_vids = youtube_api_videos(key)
+            log(f"YouTube API: {len(api_vids)} videos on the channel")
+        except Exception as e:
+            log("YouTube API unavailable, falling back to the public feed:", e)
+    if api_vids is not None:
+        vids = [v for v in api_vids if v["seconds"] >= FULL_EPISODE_MIN_MINUTES * 60 and not v["live"]]
+    else:
+        try:
+            vids = parse_youtube(Path(YT_FILE).read_text() if YT_FILE else fetch(YT_FEED_URL))
+        except Exception as e:
+            log("YouTube feed unavailable (episodes will link to Spotify):", e)
+            vids = []
 
     live = None
-    key = os.environ.get("YOUTUBE_API_KEY")
     if key:
         try:
             j = json.loads(fetch(f"https://www.googleapis.com/youtube/v3/channels?part=statistics&id={YT_CHANNEL_ID}&key={key}"))
@@ -576,17 +676,55 @@ def main():
         except Exception as e:
             log("YouTube API stats unavailable:", e)
 
+    spot = []
+    if os.environ.get("SPOTIFY_CLIENT_ID") and os.environ.get("SPOTIFY_CLIENT_SECRET"):
+        try:
+            spot = spotify_episodes(os.environ["SPOTIFY_CLIENT_ID"], os.environ["SPOTIFY_CLIENT_SECRET"])
+            log(f"Spotify API: {len(spot)} episodes")
+        except Exception as e:
+            log("Spotify API unavailable (Listen buttons will open the show page):", e)
+
     # 2. Merge with hand-edited data
     data = json.loads(DATA.read_text()) if DATA.exists() else []
     by_guid = {d["guid"]: d for d in data if d.get("guid")}
-    used_vids = {d["youtube"].split("v=")[-1] for d in data if d.get("youtube")}
+    yt_id = lambda u: (u or "").split("v=")[-1].split("&")[0] if u else ""
+    used_vids = {yt_id(d["youtube"]) for d in data if d.get("youtube")}
+    vid_by_id = {v["id"]: v for v in vids}
     eps, added = [], 0
-    for n, it in enumerate(items, start=1):
+
+    def make_ep(d, *, title, desc, date, iso, dur, link, image):
+        ep = {
+            "number": int(d["number"]) if d.get("number") else 0,
+            "title": d.get("title") or clean_title(title),
+            "guest": d.get("guest", ""), "role": d.get("role", ""), "company": d.get("company", ""),
+            "summary": d.get("summary") or auto_summary(desc),
+            "quote": d.get("quote", ""), "topics": d.get("topics", []),
+            "photo": d.get("photo", ""), "photoPosition": d.get("photoPosition", ""),
+            "youtube": d.get("youtube", ""), "auto": d.get("auto", False), "duo": d.get("duo", False),
+            "date": date, "iso": iso, "dur": dur, "link": link, "image": image, "d": d,
+            "spotify": d.get("spotify", ""), "youtubeOnly": bool(d.get("youtubeOnly")),
+        }
+        if ep["guest"] and "Gary McDonald" in ep["guest"]:
+            ep["actors"] = [
+                {"@type": "Person", "name": "Gary McDonald", "jobTitle": "President North America", "worksFor": {"@type": "Organization", "name": "Air Sheriff"}},
+                {"@type": "Person", "name": "Maurice Jenkins", "jobTitle": "Chief Innovation Officer", "worksFor": {"@type": "Organization", "name": "Miami International Airport"}}]
+        return ep
+
+    # 2a. podcast feed episodes
+    for it in items:
         d = by_guid.get(it["guid"])
         if d is None:
             d = next((x for x in data if x.get("match") and x["match"].lower() in it["rss_title"].lower()), None)
-            if d is not None and not d.get("guid"):
-                d["guid"] = it["guid"]
+        if d is None:   # an episode that was on YouTube first has now reached the podcast feed
+            yt_only = [x for x in data if x.get("youtubeOnly") and not x.get("guid")]
+            cands = [{"title": x.get("ytTitle") or x.get("title", ""), "d": x} for x in yt_only]
+            hit = best_title_match(it["rss_title"], guess_guest(it["rss_title"], it["description"]), cands)
+            if hit:
+                d = hit["d"]
+                d.pop("youtubeOnly", None)
+                log(f'"{d.get("title")}" is now on the podcast feed too — linked, no duplicate created')
+        if d is not None and not d.get("guid"):
+            d["guid"] = it["guid"]
         if d is None:
             guest = guess_guest(it["rss_title"], it["description"])
             t, role, company = split_title(it["rss_title"], guest)
@@ -597,45 +735,71 @@ def main():
             data.append(d)
             added += 1
             log(f'NEW episode: "{d["title"]}" (guest guess: {d["guest"] or "?"})')
-
-        ep = {
-            "number": int(d.get("number") or n),
-            "title": d.get("title") or clean_title(it["rss_title"]),
-            "guest": d.get("guest", ""), "role": d.get("role", ""), "company": d.get("company", ""),
-            "summary": d.get("summary") or auto_summary(it["description"]),
-            "quote": d.get("quote", ""), "topics": d.get("topics", []),
-            "photo": d.get("photo", ""), "photoPosition": d.get("photoPosition", ""),
-            "youtube": d.get("youtube", ""), "auto": d.get("auto", False),
-            "date": it["date"], "iso": it["iso"], "dur": it["dur"], "link": it["link"],
-        }
-        if ep["guest"] and "Gary McDonald" in ep["guest"]:
-            ep["actors"] = [
-                {"@type": "Person", "name": "Gary McDonald", "jobTitle": "President North America", "worksFor": {"@type": "Organization", "name": "Air Sheriff"}},
-                {"@type": "Person", "name": "Maurice Jenkins", "jobTitle": "Chief Innovation Officer", "worksFor": {"@type": "Organization", "name": "Miami International Airport"}}]
-
-        # YouTube match (only fills the link if you haven't set one)
+        ep = make_ep(d, title=it["rss_title"], desc=it["description"], date=it["date"], iso=it["iso"],
+                     dur=it["dur"], link=it["link"], image=it["image"])
         if not ep["youtube"] and vids:
             v = match_youtube(it["rss_title"], ep["guest"], vids, used_vids)
             if v:
-                ep["youtube"] = f'https://www.youtube.com/watch?v={v["id"]}'
+                ep["youtube"] = d["youtube"] = f'https://www.youtube.com/watch?v={v["id"]}'
                 used_vids.add(v["id"])
-                d["youtube"] = ep["youtube"]
-                log(f'matched YouTube video for EP {ep["number"]}: {v["title"]}')
-
-        # Artwork: your photo > RSS episode art > YouTube thumbnail
-        if not ep["photo"] and USE_AUTO_ARTWORK:
-            dest = AUTO_IMG_DIR / f'ep-{ep["number"]:02d}.jpg'
-            src = it["image"] or (f'https://i.ytimg.com/vi/{ep["youtube"].split("v=")[-1]}/maxresdefault.jpg' if ep["youtube"] else "")
-            ok = dest.exists() or (src and download_image(src, dest))
-            if not ok and ep["youtube"] and not it["image"]:
-                ok = download_image(f'https://i.ytimg.com/vi/{ep["youtube"].split("v=")[-1]}/hqdefault.jpg', dest)
-            if ok:
-                ep["photo"] = f'guests/auto/ep-{ep["number"]:02d}.jpg'
-
-        ep["watch"] = ep["youtube"] or ep["link"] or LINKS["spotify"]
+                log(f'matched YouTube video: {v["title"]}')
         eps.append(ep)
 
+    # 2b. full-length YouTube videos that aren't on the podcast feed yet
+    if YOUTUBE_FIRST_EPISODES and api_vids is not None:
+        for v in sorted(vids, key=lambda v: v["published"]):
+            d = next((x for x in data if yt_id(x.get("youtube")) == v["id"]), None)
+            if d is not None and not d.get("youtubeOnly"):
+                continue                                   # already a podcast episode
+            if d is None:
+                if v["published"] < YOUTUBE_ONLY_SINCE:
+                    continue
+                guest = guess_guest(v["title"], v["description"])
+                t, role, company = split_title(v["title"], guest)
+                d = {"youtubeOnly": True, "auto": True, "ytTitle": v["title"], "title": t,
+                     "guest": guest, "role": role, "company": company,
+                     "summary": auto_summary(v["description"]), "quote": "", "topics": [],
+                     "photo": "", "photoPosition": "", "youtube": f'https://www.youtube.com/watch?v={v["id"]}'}
+                data.append(d)
+                added += 1
+                log(f'NEW YouTube episode (not on Spotify yet): "{t}" (guest guess: {guest or "?"})')
+            used_vids.add(v["id"])
+            mins = round(v["seconds"] / 60)
+            iso = f'PT{v["seconds"] // 3600}H{v["seconds"] % 3600 // 60}M' if v["seconds"] >= 3600 else f'PT{v["seconds"] // 60}M'
+            eps.append(make_ep(d, title=v["title"], desc=v["description"], date=v["published"], iso=iso,
+                               dur=f"{mins} min", link="", image=""))
+
+    # 2c. numbering by publish date (your "number" overrides win), links, artwork
+    eps.sort(key=lambda e: (e["date"] or "0000", e["number"]))
+    n = 0
+    for ep in eps:
+        n = ep["number"] if ep["number"] else n + 1
+        ep["number"] = n
     eps.sort(key=lambda e: e["number"])
+
+    for ep in eps:
+        d = ep.pop("d")
+        if not ep["spotify"] and spot and not ep["youtubeOnly"]:
+            hit = best_title_match(d.get("ytTitle") or ep["title"], ep["guest"], spot)
+            if hit and hit["url"]:
+                ep["spotify"] = d["spotify"] = hit["url"]
+        if not ep["spotify"] and not ep["youtubeOnly"]:
+            ep["spotify"] = LINKS["spotify"]             # show page until the exact episode link is known
+        # artwork (stable file names, so re-numbering never mixes guests up)
+        art = d.get("artwork")
+        if not art or not (SITE / art).exists():
+            ident = re.sub(r"[^a-zA-Z0-9]+", "", (d.get("guid") or yt_id(ep["youtube"]) or str(ep["number"])))[:24]
+            dest = AUTO_IMG_DIR / f"art-{ident}.jpg"
+            vid = yt_id(ep["youtube"])
+            src = ep["image"] or (f"https://i.ytimg.com/vi/{vid}/maxresdefault.jpg" if vid else "")
+            ok = dest.exists() or bool(src and download_image(src, dest))
+            if not ok and vid and not ep["image"]:
+                ok = download_image(f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg", dest)
+            if ok:
+                d["artwork"] = f"guests/auto/{dest.name}"
+        if not ep["photo"] and USE_AUTO_ARTWORK and d.get("artwork"):
+            ep["photo"] = d["artwork"]
+        ep["watch"] = ep["youtube"] or ep["spotify"] or ep["link"] or LINKS["spotify"]
 
     # 3. Rewrite the site
     page = INDEX.read_text()

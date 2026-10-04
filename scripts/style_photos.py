@@ -47,7 +47,8 @@ LOGO_EXTS = {".png", ".webp", ".jpg", ".jpeg"}
 # words that often appear in downloaded logo file names but aren't part of the company name
 LOGO_NOISE = {"logo", "logos", "logotype", "white", "black", "colour", "color", "colours", "transparent", "rgb", "cmyk",
               "hd", "hires", "final", "official", "icon", "mark", "horizontal", "vertical", "primary", "secondary",
-              "dark", "light", "small", "large", "full", "copy", "new", "brand", "web", "png", "svg", "reversed", "mono"}
+              "dark", "light", "small", "large", "full", "copy", "new", "brand", "web", "png", "svg", "reversed", "mono",
+              "airline", "airlines", "airways", "aviation", "company", "corporate", "inc", "ltd"}
 
 
 def logo_tokens(key):
@@ -65,17 +66,24 @@ def all_logos():
 
 
 def match_logo(text, logos):
-    """Best logo whose words all appear in `text` (most specific wins). Returns (file, logo_key) or (None, None)."""
+    """Best logo for `text`. Strong match: every word of the logo's name appears in the text.
+    Fallback: the logo's main (first) word appears in the text, e.g. emirates.png for 'Emirates Skywards'."""
     words = set(tokens(text))
     if not words:
         return None, None
     best, best_key, best_score = None, None, 0
     for key, f in logos.items():
         lt = logo_tokens(key)
-        if lt and set(lt) <= words:
-            score = len(lt) * 10 + (5 if " ".join(lt) in " ".join(tokens(text)) else 0)
-            if score > best_score:
-                best, best_key, best_score = f, key, score
+        if not lt:
+            continue
+        if set(lt) <= words:
+            score = 100 + len(lt) * 10
+        elif len(lt[0]) >= 4 and lt[0] in words:
+            score = 10 + len(set(lt) & words)
+        else:
+            continue
+        if score > best_score:
+            best, best_key, best_score = f, key, score
     return best, best_key
 
 
@@ -118,6 +126,10 @@ def resolve_logo(person, hint, eps, logos):
             company = ctx.split(",")[-1].strip() if where == "role" else ctx
             break
     if company:
+        svgs = [f.name for f in LOGOS.glob("*.svg")] if LOGOS.exists() else []
+        hit = [n for n in svgs if match_logo(company, {slug(Path(n).stem): Path(n)})[0]]
+        if hit:
+            return None, f"found {hit[0]} but SVG isn't supported for photos — upload it as a PNG"
         return None, f"no logo yet for '{company}' — add site/logos/{slug(company)}.png"
     return None, "episode has no company — add one in data/episodes.json or name the photo person--logo.jpg"
 
@@ -166,6 +178,16 @@ def prepare_subject(src, session):
     top, bottom = ys.min(), ys.max()
     band = a[top: top + max(1, (bottom - top) // 4)] > 40
     bx = np.where(band.any(axis=0))[0]
+    # cut-out quality: a clean portrait is one solid shape; text-heavy thumbnails break into many pieces
+    mask = a > 40
+    box_area = (ys.max() - ys.min() + 1) * (xs.max() - xs.min() + 1)
+    solidity = mask.sum() / max(1, box_area)
+    try:
+        from scipy import ndimage
+        lab, n = ndimage.label(mask)
+        largest = ndimage.sum(mask, lab, range(1, n + 1)).max() / mask.sum() if n else 0
+    except Exception:
+        largest = 1.0
     rgb, alpha = cut.convert("RGB"), cut.split()[-1]
     g = ImageOps.grayscale(rgb)
     g = g.point([int(255 * ((i / 255) ** 1.12) * 0.92 + 6) for i in range(256)])
@@ -173,7 +195,8 @@ def prepare_subject(src, session):
     g = ImageEnhance.Sharpness(g).enhance(1.25)
     return {"img": Image.merge("RGBA", (g, g, g, alpha)), "top": top, "bottom": bottom,
             "face_x": (bx.min() + bx.max()) / 2, "face_w": max(1, bx.max() - bx.min()), "width": xs.max() - xs.min(),
-            "reaches_bottom": bottom >= im.height - 3}
+            "reaches_bottom": bottom >= im.height - 3,
+            "clean": bool(largest >= 0.85 and solidity >= 0.40 and (bottom - top) >= im.height * 0.35)}
 
 
 def place(canvas, subj, slot_x, slot_w, head_w=None):
@@ -246,12 +269,12 @@ def main():
     exts = {".jpg", ".jpeg", ".png", ".webp", ".heic"}
     new = [p for p in PHOTOS.iterdir() if p.is_file() and p.suffix.lower() in exts] if PHOTOS.exists() else []
     done = [p for p in DONE.iterdir() if p.is_file() and p.suffix.lower() in exts] if DONE.exists() else []
-    if not new and not done:
+    data = json.loads(DATA.read_text())
+    if not new and not done and not any(ep.get("artwork") for ep in data):
         print("[photos] nothing to process")
         return 0
     from rembg import new_session
     session = new_session("isnet-general-use")
-    data = json.loads(DATA.read_text())
     logos = all_logos()
     rows = []
     by_person = {}
@@ -279,12 +302,41 @@ def main():
         rows.append((f.name, eps[0].get("title", "") if eps else "no episode matched — check the name",
                      logo.name if logo else "none", why))
 
+    # guests with no uploaded photo: try the episode artwork (clean headshots only)
+    for ep in data:
+        art = ep.get("artwork")
+        guests = guests_of(ep)
+        if not art or len(guests) != 1 or guests[0] in subjects:
+            continue
+        person = guests[0]
+        src = ROOT / "site" / art
+        if not src.exists():
+            continue
+        try:
+            subj = prepare_subject(src, session)
+        except Exception as e:
+            rows.append((art, ep.get("title", ""), "—", f"artwork skipped: {e}"))
+            continue
+        if not subj["clean"]:
+            if ep.get("photoSource") == "artwork":
+                ep.pop("photo", None); ep.pop("photoSource", None)
+            rows.append((art, ep.get("title", ""), "—", f"artwork skipped (text or graphics, not a clean headshot) — upload photos/{person}.jpg"))
+            continue
+        logo, why = resolve_logo(person, "", [ep], logos)
+        subjects[person], person_logo[person] = subj, logo
+        compose([subj], [logo], OUT / f"{person}.jpg")
+        ep["photoSource"] = "artwork"
+        rows.append((art, ep.get("title", ""), logo.name if logo else "none", "from episode artwork · " + why))
+
     # attach photos to episodes; episodes with several guests get one side-by-side image
     for ep in data:
         guests = guests_of(ep)
         have = [g for g in guests if g in subjects]
         if not have:
             continue
+        for g in have:
+            if g in by_person:
+                ep["photoSource"] = "upload"
         if len(guests) > 1 and len(have) == len(guests):
             name = slug(ep.get("title", "") or "-".join(guests))[:60]
             compose([subjects[g] for g in guests], [person_logo.get(g) for g in guests], OUT / f"{name}.jpg")
