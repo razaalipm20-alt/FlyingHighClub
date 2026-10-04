@@ -241,7 +241,8 @@
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=sppsb__gkVQ",
     "photoSource": "upload",
-    "artwork": "guests/auto/art-a5a1b58c7ca1441f89da5bc5.jpg"
+    "artwork": "guests/auto/art-a5a1b58c7ca1441f89da5bc5.jpg",
+    "featured": true
   },
   {
     "guid": "2c3437d1-6b9b-4324-a21a-e90ab26e387d",
@@ -264,7 +265,8 @@
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=9c2ZjJiivJ8",
     "photoSource": "upload",
-    "artwork": "guests/auto/art-2c3437d16b9b4324a21ae90a.jpg"
+    "artwork": "guests/auto/art-2c3437d16b9b4324a21ae90a.jpg",
+    "featured": true
   },
   {
     "guid": "6cbda2a6-dbf0-48a6-a58e-11a036771f61",
@@ -286,7 +288,8 @@
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=bWLJ0CeBYcI",
     "photoSource": "upload",
-    "artwork": "guests/auto/art-6cbda2a6dbf048a6a58e11a0.jpg"
+    "artwork": "guests/auto/art-6cbda2a6dbf048a6a58e11a0.jpg",
+    "featured": true
   },
   {
     "guid": "1c2870de-8f92-450d-bd57-d8f10690cc2c",
@@ -308,7 +311,8 @@
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=1G9-TvQjLvs",
     "photoSource": "upload",
-    "artwork": "guests/auto/art-1c2870de8f92450dbd57d8f1.jpg"
+    "artwork": "guests/auto/art-1c2870de8f92450dbd57d8f1.jpg",
+    "featured": true
   },
   {
     "guid": "e2bebb65-60af-48f0-a068-8c9fcf113d94",
@@ -330,7 +334,8 @@
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=3HDC5hfdGrk",
     "photoSource": "upload",
-    "artwork": "guests/auto/art-e2bebb6560af48f0a0688c9f.jpg"
+    "artwork": "guests/auto/art-e2bebb6560af48f0a0688c9f.jpg",
+    "featured": true
   },
   {
     "guid": "1a7faf70-c23b-4eeb-ac92-36fb8e4d76ff",
@@ -370,7 +375,8 @@
     "youtube": "https://www.youtube.com/watch?v=oD2LHG1iNto",
     "artwork": "guests/auto/art-oD2LHG1iNto.jpg",
     "ytPublished": "2025-06-03",
-    "ytSeconds": 1853
+    "ytSeconds": 1853,
+    "featured": true
   },
   {
     "youtubeOnly": true,
@@ -387,7 +393,8 @@
     "youtube": "https://www.youtube.com/watch?v=CVsKICb6XFE",
     "artwork": "guests/auto/art-CVsKICb6XFE.jpg",
     "ytPublished": "2025-06-16",
-    "ytSeconds": 1522
+    "ytSeconds": 1522,
+    "featured": true
   },
   {
     "youtubeOnly": true,
@@ -438,7 +445,8 @@
     "youtube": "https://www.youtube.com/watch?v=RbA5V7o5m2A",
     "artwork": "guests/auto/art-RbA5V7o5m2A.jpg",
     "ytPublished": "2026-02-17",
-    "ytSeconds": 1642
+    "ytSeconds": 1642,
+    "featured": true
   },
   {
     "youtubeOnly": true,
@@ -506,7 +514,8 @@
     "youtube": "https://www.youtube.com/watch?v=BHAhQ4PfW1Y",
     "artwork": "guests/auto/art-BHAhQ4PfW1Y.jpg",
     "ytPublished": "2026-05-28",
-    "ytSeconds": 2046
+    "ytSeconds": 2046,
+    "featured": true
   },
   {
     "youtubeOnly": true,
@@ -557,6 +566,28 @@
     "youtube": "https://www.youtube.com/watch?v=KeLAWzbWn5w",
     "artwork": "guests/auto/art-KeLAWzbWn5w.jpg",
     "ytPublished": "2026-08-18",
-    "ytSeconds": 1930
+    "ytSeconds": 1930,
+    "featured": true
+  },
+  {
+    "youtubeOnly": true,
+    "ytTitle": "Amy Burr - President JetBlue Ventures - \" Sometimes you WIN but sometimes you LOSE\"",
+    "title": "Sometimes you win, but sometimes you lose",
+    "guest": "Amy Burr",
+    "role": "President",
+    "company": "JetBlue Ventures",
+    "summary": "",
+    "quote": "",
+    "topics": [
+      "venture capital",
+      "jetblue",
+      "investing",
+      "startups",
+      "innovation"
+    ],
+    "photo": "",
+    "photoPosition": "",
+    "youtube": "https://www.youtube.com/watch?v=gA-3RUXWnQI",
+    "featured": true
   }
 ]

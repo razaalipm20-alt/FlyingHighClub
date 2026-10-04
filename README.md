@@ -34,3 +34,9 @@ Adding a logo later also updates the photos already on the site. After each run,
 New episodes are added to `data/episodes.json` with `"auto": true` and a best-guess guest name and role taken from the title. Check them, fix anything, and delete the `"auto": true` line once you're happy. Your edits are never overwritten.
 
 **Don't edit** anything between `AUTO:…:START` and `AUTO:…:END` markers in `index.html`; the scripts rewrite those.
+
+## Curating the site
+- **Featured guests:** add `"featured": true,` to an episode in `data/episodes.json` to show it in the Roster cards (the 3 newest episodes always show).
+- **Hide an episode:** add `"hidden": true,` to its entry — it disappears from the site and is never re-added.
+- **Logo strip:** ranked list `guestCompanies` in `SITE CONFIG` (`site/index.html`); only companies with a logo file in `site/logos/` are shown, up to 16.
+- **YouTube-only episodes:** full-length videos (15 min+) since September 2023 are added automatically; any you add by hand always show.

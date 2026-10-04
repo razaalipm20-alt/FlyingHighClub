@@ -1,1 +1,1 @@
-Put guest headshots here (see SITE CONFIG → episodes → photo).
+Styled guest photos are created here automatically from photos/.

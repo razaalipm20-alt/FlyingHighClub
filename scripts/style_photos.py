@@ -25,6 +25,10 @@ NAVY, DEEP, BRASS = np.array([14, 42, 71]), np.array([8, 11, 16]), np.array([183
 
 
 def slug(s):
+    """lower-case-with-dashes, accents removed so 'József Váradi' -> 'jozsef-varadi', 'Bjørn' -> 'bjorn'."""
+    import unicodedata
+    s = str(s).translate(str.maketrans({"ø": "o", "Ø": "O", "æ": "ae", "Æ": "AE", "ß": "ss", "ł": "l", "Ł": "L", "đ": "d", "Đ": "D"}))
+    s = "".join(c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c))
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
 
 
@@ -49,6 +53,11 @@ LOGO_NOISE = {"logo", "logos", "logotype", "white", "black", "colour", "color", 
               "hd", "hires", "final", "official", "icon", "mark", "horizontal", "vertical", "primary", "secondary",
               "dark", "light", "small", "large", "full", "copy", "new", "brand", "web", "png", "svg", "reversed", "mono",
               "airline", "airlines", "airways", "aviation", "company", "corporate", "inc", "ltd"}
+
+
+# words too common to identify a company on their own (stops "the-airport-guy" matching every airport)
+GENERIC_WORDS = {"airport", "airports", "international", "air", "aviation", "travel", "global", "group", "holdings",
+                 "aerospace", "aero", "jet", "fly", "flying", "partners", "capital", "ventures", "services", "solutions"}
 
 
 def logo_tokens(key):
@@ -84,7 +93,7 @@ def match_logo(text, logos):
             score = 60                                   # iag.png  <->  "International Airlines Group"
         elif len(words) == 1 and len(lt) >= 2 and next(iter(words)) == logo_initials:
             score = 60                                   # international-airlines-group.png  <->  "IAG"
-        elif len(lt[0]) >= 4 and lt[0] in words:
+        elif len(lt[0]) >= 4 and lt[0] in words and lt[0] not in GENERIC_WORDS:
             score = 10 + len(set(lt) & words)
         else:
             continue
@@ -235,10 +244,26 @@ def prepare_subject(src, session):
     g = ImageEnhance.Sharpness(g).enhance(1.25)
     return {"img": Image.merge("RGBA", (g, g, g, alpha)), "top": top, "bottom": bottom,
             "face_x": (bx.min() + bx.max()) / 2, "face_w": max(1, bx.max() - bx.min()), "width": xs.max() - xs.min(),
+            "head_w": head_width(a > 40, top, bottom),
             "reaches_bottom": bottom >= im.height - 3,
             # a person's head (top quarter of the shape) is much narrower than the whole figure; a text banner isn't
             "clean": bool(largest >= 0.85 and solidity >= 0.40 and (bottom - top) >= im.height * 0.35
                           and (bx.max() - bx.min()) <= 0.65 * max(1, xs.max() - xs.min()))}
+
+
+def head_width(mask, top, bottom):
+    """Typical width of the head: median row width over the top ~quarter of the figure, ignoring the widest rows
+    (shoulders). Works for both close headshots and full-length photos."""
+    rows = mask[top: top + max(4, (bottom - top) // 4)]
+    widths = []
+    for r in rows:
+        xs = np.where(r)[0]
+        if len(xs):
+            widths.append(xs.max() - xs.min())
+    if not widths:
+        return 1
+    widths = np.array(widths)
+    return max(1, float(np.percentile(widths, 40)))
 
 
 def place(canvas, subj, slot_x, slot_w, head_w=None):
@@ -250,6 +275,7 @@ def place(canvas, subj, slot_x, slot_w, head_w=None):
     else:
         s = (H * 0.88) / span if subj["reaches_bottom"] else (H * 0.80) / span
         s = max(s, (slot_w * 0.85) / max(1, subj["width"]))
+        s = max(s, (slot_w * 0.24) / subj.get("head_w", subj["face_w"]))   # full-length photos: keep the head a proper size
         s = min(s, (H * 1.6) / span)   # never zoom so far that the head leaves the frame
     cut = subj["img"].resize((max(1, int(subj["img"].width * s)), max(1, int(subj["img"].height * s))), Image.LANCZOS)
     top_s = int(subj["top"] * s)

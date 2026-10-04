@@ -56,9 +56,10 @@ SPOTIFY_SHOW_ID = "4cdbL0Sl4aMqkJ8XMLs4x9"
 FULL_EPISODE_MIN_MINUTES = 15
 # Create episodes for full-length YouTube videos that aren't on the podcast feed yet.
 YOUTUBE_FIRST_EPISODES = True
-# Ignore YouTube videos published before this date when creating YouTube-only episodes
-# (stops old uploads from before the podcast feed began turning into episodes).
-YOUTUBE_ONLY_SINCE = "2025-06-01"
+# Ignore YouTube videos published before this date when creating YouTube-only episodes.
+# To remove a video that isn't a real episode, add  "hidden": true  to its entry in data/episodes.json
+# — it disappears from the site and is never re-added.
+YOUTUBE_ONLY_SINCE = "2023-09-01"
 
 # Episode artwork (from the RSS feed, or the YouTube thumbnail) is always downloaded to
 # site/guests/auto/ and handed to the photo styler, which turns clean headshots into
@@ -551,6 +552,7 @@ def build_js(eps, live):
                        "role": ep["role"], "company": ep["company"], "photo": file_version(ep["photo"]) if ep["photo"] else "", "photoPosition": ep.get("photoPosition", ""),
                        "quote": ep["quote"], "topics": ep["topics"], "url": ep["watch"], "youtube": ep["youtube"], "spotify": ep.get("spotify", ""),
                        **({"youtubeOnly": True} if ep.get("youtubeOnly") else {}),
+                       **({"featured": True} if ep.get("featured") else {}),
                        **({"duo": True} if ep.get("duo") else {})})
     data = {
         "updated": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
@@ -746,7 +748,7 @@ def main():
             "photo": d.get("photo", ""), "photoPosition": d.get("photoPosition", ""),
             "youtube": d.get("youtube", ""), "auto": d.get("auto", False), "duo": d.get("duo", False),
             "date": date, "iso": iso, "dur": dur, "link": link, "image": image, "d": d,
-            "spotify": d.get("spotify", ""), "youtubeOnly": bool(d.get("youtubeOnly")),
+            "spotify": d.get("spotify", ""), "youtubeOnly": bool(d.get("youtubeOnly")), "featured": bool(d.get("featured")),
         }
         if ep["guest"] and "Gary McDonald" in ep["guest"]:
             ep["actors"] = [
@@ -815,6 +817,22 @@ def main():
             eps.append(make_ep(d, title=v["title"], desc=v["description"], date=v["published"], iso=iso,
                                dur=f"{mins} min", link="", image=""))
 
+    if YOUTUBE_FIRST_EPISODES and api_vids is not None:
+        by_id = {v["id"]: v for v in api_vids}
+        shown = {yt_id(e["youtube"]) for e in eps if e.get("youtube")}
+        for d in data:
+            vid = yt_id(d.get("youtube"))
+            if not d.get("youtubeOnly") or not vid or vid in shown:
+                continue
+            v = by_id.get(vid)
+            if v:
+                d["ytPublished"], d["ytSeconds"] = v["published"], v["seconds"]
+                d.setdefault("ytTitle", v["title"])
+            sec = int(d.get("ytSeconds") or 0)
+            iso = (f"PT{sec // 3600}H{sec % 3600 // 60}M" if sec >= 3600 else f"PT{sec // 60}M") if sec else ""
+            eps.append(make_ep(d, title=d.get("ytTitle") or d.get("title", ""), desc=(v or {}).get("description", ""),
+                               date=d.get("ytPublished", ""), iso=iso, dur=f"{round(sec / 60)} min" if sec else "",
+                               link="", image=""))
     elif YOUTUBE_FIRST_EPISODES:
         # no YouTube key in this run (e.g. the photo workflow): keep the saved YouTube-only episodes on the site
         for d in data:
@@ -824,6 +842,9 @@ def main():
             iso = (f"PT{sec // 3600}H{sec % 3600 // 60}M" if sec >= 3600 else f"PT{sec // 60}M") if sec else ""
             eps.append(make_ep(d, title=d.get("ytTitle") or d.get("title", ""), desc="", date=d.get("ytPublished", ""),
                                iso=iso, dur=f"{round(sec / 60)} min" if sec else "", link="", image=""))
+
+    # episodes you've hidden ("hidden": true in data/episodes.json) are left out completely
+    eps = [e for e in eps if not e["d"].get("hidden")]
 
     # 2c. numbering by publish date (your "number" overrides win), links, artwork
     eps.sort(key=lambda e: (e["date"] or "0000", e["number"]))

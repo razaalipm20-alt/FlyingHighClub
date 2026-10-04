@@ -3727,6 +3727,19 @@ body.booted .grain { animation: boot-grain 0.9s 0.6s var(--ease-aviation) forwar
 .ep-plat { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--instrument-cyan); transition: color 0.2s; }
 .ep-plat:hover { color: var(--runway-amber); }
 .ep-plat-soon { color: var(--cabin-bone-dim); }
+
+/* Roster: "see all episodes" end card */
+.r-card.r-all { flex-basis: 220px; display: grid; place-items: center; text-align: center; text-decoration: none;
+  background: linear-gradient(160deg, var(--altitude-navy-2), var(--altitude-navy)); border-color: rgba(183, 146, 104, 0.35); }
+.r-card.r-all:hover { border-color: var(--brass); }
+.r-all-inner { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 1.5rem; }
+.r-all-num { font-family: var(--f-display); font-size: 4rem; line-height: 1; color: var(--brass); }
+.r-all-txt { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cabin-bone-dim); }
+.r-all-cta { margin-top: 1.2rem; font-size: 0.9rem; color: var(--cabin-bone); }
+
+/* optical balance: wide logos capped by width, square-ish logos allowed a little taller */
+.logo-item img { height: 46px; width: 130px; max-width: none; object-fit: contain; }
+@media (max-width: 640px) { .logo-item img { height: 38px; width: 104px; } }
 </style>
 </head>
 <body>
@@ -5232,22 +5245,34 @@ const SITE = {
     { code: "HND", city: "Tokyo",       lat: 35.55, lon: 139.78,            label: "right" }
   ],
 
-  // Guest logo carousel — "Guests have joined us from".
-  // Logos are picked up automatically from site/logos/ by company name (kenya-airways.png → "Kenya Airways").
-  // Only set logo: "logos/…" here to force a specific file. No file = the company name is shown instead. url is optional (makes the logo clickable).
-  // Transparent PNG or SVG works best; logos show in white and switch to full colour on hover.
+  // The Roster (guest cards): newest episodes + the ones marked "featured": true in data/episodes.json.
+  // Every episode is still in the episode guide and search; this only controls the cards.
+  roster: { latest: 3, max: 14 },
+
+  // "Guests have joined us from" — ranked list, most important first.
+  // Only companies with a logo file in site/logos/ are shown (matched by name automatically), up to maxLogos.
+  // To add one: upload its logo and put the name in this list where you want it ranked.
+  logoCarousel: { maxLogos: 16, logosOnly: true },
   guestCompanies: [
-    { name: "IATA",                       logo: "", url: "" },
-    { name: "Kenya Airways",              logo: "", url: "" },
-    { name: "Emirates Skywards",          logo: "", url: "" },
-    { name: "Swissport",                  logo: "", url: "" },
-    { name: "Miami International Airport", logo: "", url: "" },
-    { name: "flyadeal",                   logo: "", url: "https://www.flyadeal.com" },
-    { name: "IAG",                        logo: "", url: "" },
-    { name: "Microsoft",                  logo: "", url: "" },
-    { name: "British Airways",            logo: "", url: "" },
-    { name: "Air Sheriff",                logo: "", url: "" },
-    { name: "Zamna",                      logo: "", url: "" }
+    { name: "IATA" },
+    { name: "American Airlines" },
+    { name: "Emirates" },
+    { name: "Star Alliance" },
+    { name: "Wizz Air" },
+    { name: "IAG" },
+    { name: "JetBlue Ventures" },
+    { name: "San Francisco International Airport" },
+    { name: "Kenya Airways" },
+    { name: "Saudia" },
+    { name: "Swissport" },
+    { name: "Norse Atlantic Airways" },
+    { name: "Breeze Airways" },
+    { name: "Miami International Airport" },
+    { name: "flyadeal" },
+    { name: "Berlin Airport" },
+    { name: "Fetcherr" },
+    { name: "i6 Group" },
+    { name: "Air Sheriff" }
   ],
 
   episodes: AUTO.episodes
@@ -5357,14 +5382,16 @@ const SITE = {
   // ---- Guest logo carousel ----
   const track = $('#logoTrack');
   if (track && SITE.guestCompanies && SITE.guestCompanies.length) {
-    const list = SITE.guestCompanies;
-    const reps = Math.max(1, Math.ceil(8 / list.length));       // fill the strip even with few logos
+    const list = SITE.guestCompanies.map(c => ({ ...c }));
+    let reps = 1;
     // Logo files in site/logos/ are found automatically by company name (e.g. "Kenya Airways" → logos/kenya-airways.png)
     const STOPW = new Set(['the','of','and','plc','ltd','limited','inc','co','group','uk','holdings','llc','sa','ag']);
     const toks = t => String(t).toLowerCase().replace(/[^a-z0-9]+/g, '-').split('-').filter(w => w && !STOPW.has(w));
     const NOISE = new Set(['logo','logos','logotype','white','black','colour','color','colours','transparent','rgb','cmyk','hd','hires',
       'final','official','icon','mark','horizontal','vertical','primary','secondary','dark','light','small','large','full','copy','new',
       'brand','web','png','svg','reversed','mono','airline','airlines','airways','aviation','company','corporate','inc','ltd']);
+    const GENERIC = new Set(['airport','airports','international','air','aviation','travel','global','group','holdings',
+      'aerospace','aero','jet','fly','flying','partners','capital','ventures','services','solutions']);
     const ltoks = t => toks(t).filter(w => !NOISE.has(w) && !/^v?\d+[a-z]?$/.test(w));
     const autoLogo = name => {
       const words = new Set(toks(name)); let best = '', score = 0;
@@ -5373,12 +5400,17 @@ const SITE = {
         if (!k.length) return;
         let sc = 0;
         if (k.every(w => words.has(w))) sc = 100 + k.length * 10;                      // every word matches
-        else if (k[0].length >= 4 && words.has(k[0])) sc = 10 + k.filter(w => words.has(w)).length;  // main word matches
+        else if (k[0].length >= 4 && words.has(k[0]) && !GENERIC.has(k[0])) sc = 10 + k.filter(w => words.has(w)).length;  // main word matches
         if (sc > score) { best = file; score = sc; }
       });
       return best;
     };
     list.forEach(c => { if (!c.logo) c.logo = autoLogo(c.name); });
+    const LC = SITE.logoCarousel || {};
+    let shown = LC.logosOnly ? list.filter(c => c.logo) : list.slice();
+    if (shown.length < 5) shown = list.slice(0, 8);            // too few logos yet: fall back to names
+    list.length = 0; shown.slice(0, LC.maxLogos || 16).forEach(c => list.push(c));
+    reps = Math.max(1, Math.ceil(8 / Math.max(1, list.length)));   // fill the strip even with few logos
     const makeItem = (c, hidden) => {
       const el = document.createElement(c.url ? 'a' : 'div');
       el.className = 'logo-item';
@@ -5413,7 +5445,14 @@ const SITE = {
   if (rTrack) {
     const initials = n => n.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
     const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    rTrack.innerHTML = SITE.episodes.map((ep, i) => {
+    const RC = SITE.roster || { latest: 3, max: 12 };
+    const allEps = SITE.episodes;
+    const picked = [];
+    allEps.slice(0, RC.latest || 3).forEach(e => picked.push(e));
+    allEps.filter(e => e.featured && !picked.includes(e)).forEach(e => picked.push(e));
+    if (picked.length < 6) allEps.forEach(e => { if (picked.length < 6 && !picked.includes(e)) picked.push(e); });
+    const rosterEps = picked.slice(0, RC.max || 12);
+    rTrack.innerHTML = rosterEps.map((ep, i) => {
       const role = [ep.role, ep.company].filter(Boolean).join(', ');
       return `
       <article class="r-card${i === 0 ? ' latest' : ''}${ep.duo ? ' duo' : ''}" tabindex="0" data-url="${esc(ep.youtube || ep.url)}"
@@ -5443,9 +5482,13 @@ const SITE = {
           </div>
         </div>
       </article>`;
-    }).join('');
+    }).join('') + (allEps.length > rosterEps.length ? `
+      <a class="r-card r-all" href="#episodes" aria-label="See all ${allEps.length} episodes">
+        <div class="r-all-inner"><span class="r-all-num">${allEps.length}</span><span class="r-all-txt">episodes</span>
+        <span class="r-all-cta">See them all →</span></div>
+      </a>` : '');;
 
-    const cards = $$('.r-card', rTrack);
+    const cards = $$('.r-card:not(.r-all)', rTrack);
     const openCard = c => {
       cards.forEach(x => x.classList.toggle('open', x === c));
       rTrack.classList.toggle('has-open', !!c);
