@@ -41,6 +41,8 @@ jobs:
         run: python scripts/style_photos.py
 
       - name: Refresh the site
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python scripts/update_site.py
 
       - name: Publish changes
