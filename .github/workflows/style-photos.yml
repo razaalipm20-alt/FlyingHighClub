@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: main
 
       - uses: actions/setup-python@v6
         with:
@@ -33,7 +35,7 @@ jobs:
           key: rembg-isnet-v1
 
       - name: Install tools
-        run: pip install pillow numpy "rembg[cpu]"
+        run: pip install pillow numpy scipy "rembg[cpu]"
 
       - name: Style new photos
         run: python scripts/style_photos.py
@@ -43,12 +45,13 @@ jobs:
 
       - name: Publish changes
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            git config user.name  "fhc-site-bot"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add -A
-            git commit -m "Styled guest photo(s)"
-            git push
-          else
-            echo "No new photos."
-          fi
+          if [ -z "$(git status --porcelain)" ]; then echo "No new photos."; exit 0; fi
+          git config user.name  "fhc-site-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Styled guest photo(s)"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -X theirs origin main && git push origin HEAD:main && exit 0
+            echo "Push clashed with another update, retrying ($i)..."; sleep $((i * 5))
+          done
+          exit 1
