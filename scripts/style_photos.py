@@ -76,8 +76,14 @@ def match_logo(text, logos):
         lt = logo_tokens(key)
         if not lt:
             continue
+        initials = "".join(w[0] for w in slug(text).split("-") if w and w not in {"the", "of", "and", "for"})
+        logo_initials = "".join(w[0] for w in lt)
         if set(lt) <= words:
             score = 100 + len(lt) * 10
+        elif len(lt) == 1 and len(lt[0]) >= 2 and lt[0] == initials:
+            score = 60                                   # iag.png  <->  "International Airlines Group"
+        elif len(words) == 1 and len(lt) >= 2 and next(iter(words)) == logo_initials:
+            score = 60                                   # international-airlines-group.png  <->  "IAG"
         elif len(lt[0]) >= 4 and lt[0] in words:
             score = 10 + len(set(lt) & words)
         else:
@@ -135,35 +141,48 @@ def resolve_logo(person, hint, eps, logos):
 
 
 def white_logo(path, max_w=210, max_h=100):
-    """Turn any logo file into a white mark for the navy photos. Handles:
-      • transparent PNGs in colour (two-tone: dark parts solid, light parts softer, so details survive)
-      • logos that are already white (kept at full strength)
-      • logos on a solid background box of any colour (background removed using the colour at the edges)"""
+    """Turn any logo file into a clean white mark (transparent PNG in memory). Handles:
+      • transparent logos in colour — two-tone relative to the logo's own darkest part
+        (so single-colour logos stay solid and details like the MIA plane stay visible)
+      • logos that are already white — kept solid
+      • logos on a light box, including fake 'transparency' checkerboards — light, colourless pixels removed
+      • logos on a dark or coloured box — background removed using the colour at the edges"""
     lg = Image.open(path).convert("RGBA")
     a = np.array(lg).astype(float)
-    rgb, alpha = a[..., :3], a[..., 3]
-    if (alpha < 250).mean() < 0.02:
-        # no real transparency: use the colour around the edges as the background
+    rgb, alpha = a[..., :3], a[..., 3].copy()
+    lum = (0.2126 * rgb[..., 0] + 0.7152 * rgb[..., 1] + 0.0722 * rgb[..., 2]) / 255
+    sat = (rgb.max(axis=2) - rgb.min(axis=2)) / 255
+    boxed = (alpha < 250).mean() < 0.02
+    strength = None
+    if boxed:
         border = np.concatenate([rgb[0], rgb[-1], rgb[:, 0], rgb[:, -1]])
         bg = np.median(border, axis=0)
-        dist = np.sqrt(((rgb - bg) ** 2).sum(axis=2))
-        alpha = np.clip((dist - 30) * 4, 0, 255)
         bg_lum = (0.2126 * bg[0] + 0.7152 * bg[1] + 0.0722 * bg[2]) / 255
-    else:
-        bg_lum = None
-    lum = (0.2126 * rgb[..., 0] + 0.7152 * rgb[..., 1] + 0.0722 * rgb[..., 2]) / 255
+        if bg_lum > 0.75:
+            # light box (white, or a grey/white checkerboard): keep dark or coloured pixels
+            dark = np.clip((0.78 - lum) / 0.30, 0, 1)
+            ink = np.maximum(dark, np.clip((sat - 0.18) / 0.15, 0, 1))
+            ys, xs = np.where(ink > 0.5)
+            if len(ys):
+                area = (ys.max() - ys.min() + 1) * (xs.max() - xs.min() + 1)
+                region = dark[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
+                if (region > 0.5).sum() / area > 0.55:
+                    ink = dark      # a solid dark box with lettering inside: cut the lettering out of the box
+            alpha = ink * 255
+            strength = np.ones_like(lum)
+        else:
+            dist = np.sqrt(((rgb - bg) ** 2).sum(axis=2))
+            alpha = np.clip((dist - 30) * 4, 0, 255)
+            strength = np.ones_like(lum)
     visible = alpha > 20
     if not visible.any():
         raise ValueError("logo file looks empty")
-    mean_lum = lum[visible].mean()
-    if bg_lum is not None:
-        # strength = how far each pixel is from the background colour
-        contrast = np.abs(lum - bg_lum)
-        strength = np.clip(contrast / max(0.15, contrast[visible].max()), 0.42, 1.0)
-    elif mean_lum > 0.72:
-        strength = np.ones_like(lum)                       # already a white / light logo: keep it solid
-    else:
-        strength = np.clip(1.3 - lum, 0.42, 1.0)          # colour logo: two-tone
+    if strength is None:
+        if lum[visible].mean() > 0.72:
+            strength = np.ones_like(lum)                         # already a white / light logo
+        else:
+            base = np.percentile(lum[visible], 5)
+            strength = np.clip(1 - (lum - base) * 1.25, 0.42, 1.0)  # two-tone, relative to its darkest part
     a[..., 3] = alpha * strength
     a[..., :3] = 255
     out = Image.fromarray(a.clip(0, 255).astype("uint8"))
@@ -217,7 +236,9 @@ def prepare_subject(src, session):
     return {"img": Image.merge("RGBA", (g, g, g, alpha)), "top": top, "bottom": bottom,
             "face_x": (bx.min() + bx.max()) / 2, "face_w": max(1, bx.max() - bx.min()), "width": xs.max() - xs.min(),
             "reaches_bottom": bottom >= im.height - 3,
-            "clean": bool(largest >= 0.85 and solidity >= 0.40 and (bottom - top) >= im.height * 0.35)}
+            # a person's head (top quarter of the shape) is much narrower than the whole figure; a text banner isn't
+            "clean": bool(largest >= 0.85 and solidity >= 0.40 and (bottom - top) >= im.height * 0.35
+                          and (bx.max() - bx.min()) <= 0.65 * max(1, xs.max() - xs.min()))}
 
 
 def place(canvas, subj, slot_x, slot_w, head_w=None):

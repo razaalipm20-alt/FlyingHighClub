@@ -429,7 +429,7 @@ def build_guide(eps):
 
 
 def build_latest(ep):
-    art = (f'<img src="{E(ep["photo"])}" alt="{E(ep["guest"])}" style="{"object-position:" + E(ep["photoPosition"]) if ep.get("photoPosition") else ""}">'
+    art = (f'<img src="{E(file_version(ep["photo"]))}" alt="{E(ep["guest"])}" style="{"object-position:" + E(ep["photoPosition"]) if ep.get("photoPosition") else ""}">'
            if ep["photo"] else f'<div class="latest-silhouette">{E(initials(ep["guest"]))}</div>')
     w = who(ep)
     blurb = ep["summary"] or ep["title"]
@@ -548,7 +548,7 @@ def build_js(eps, live):
     js_eps = []
     for ep in reversed(eps):
         js_eps.append({"number": f'{ep["number"]:02d}', "title": ep["title"], "guest": ep["guest"] or "The Flying High Club",
-                       "role": ep["role"], "company": ep["company"], "photo": ep["photo"], "photoPosition": ep.get("photoPosition", ""),
+                       "role": ep["role"], "company": ep["company"], "photo": file_version(ep["photo"]) if ep["photo"] else "", "photoPosition": ep.get("photoPosition", ""),
                        "quote": ep["quote"], "topics": ep["topics"], "url": ep["watch"], "youtube": ep["youtube"], "spotify": ep.get("spotify", ""),
                        **({"youtubeOnly": True} if ep.get("youtubeOnly") else {}),
                        **({"duo": True} if ep.get("duo") else {})})
@@ -560,10 +560,7 @@ def build_js(eps, live):
     }
     if live:
         data["liveStats"] = live
-    logo_dir = SITE / "logos"
-    if logo_dir.exists():
-        data["logos"] = {re.sub(r"[^a-z0-9]+", "-", f.stem.lower()).strip("-"): f"logos/{f.name}"
-                         for f in sorted(logo_dir.iterdir()) if f.suffix.lower() in {".png", ".svg", ".webp", ".jpg", ".jpeg"}}
+    data["logos"] = web_logos()
     return "const AUTO = " + json.dumps(data, ensure_ascii=False, indent=1).replace("</", "<\\/") + ";"
 
 
@@ -606,6 +603,53 @@ def replace_block(text, name, new, js=False):
     if not pat.search(text):
         raise SystemExit(f"Marker AUTO:{name} not found in index.html — was it edited by hand?")
     return pat.sub(lambda m: m.group(1) + new + m.group(2), text, count=1)
+
+
+def file_version(rel):
+    """Short content hash for cache-busting: photos/logos get ?v=… that changes when the image changes."""
+    import hashlib
+    f = SITE / rel.split("?")[0]
+    try:
+        return rel.split("?")[0] + "?v=" + hashlib.md5(f.read_bytes()).hexdigest()[:8]
+    except Exception:
+        return rel
+
+
+def web_logos():
+    """Clean white, transparent versions of every logo for the carousel (site/logos/web/)."""
+    src_dir, out_dir = SITE / "logos", SITE / "logos" / "web"
+    if not src_dir.exists():
+        return {}
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from style_photos import white_logo
+    except Exception as e:
+        log("logo cleaner unavailable:", e)
+        white_logo = None
+    out_dir.mkdir(parents=True, exist_ok=True)
+    manifest, keep = {}, set()
+    for f in sorted(src_dir.iterdir()):
+        if not f.is_file() or f.suffix.lower() not in {".png", ".webp", ".jpg", ".jpeg"}:
+            continue
+        key = re.sub(r"[^a-z0-9]+", "-", f.stem.lower()).strip("-")
+        rel = f"logos/{f.name}"
+        if white_logo:
+            dest = out_dir / (key + ".png")
+            try:
+                img = white_logo(f, max_w=480, max_h=200)
+                import io
+                buf = io.BytesIO(); img.save(buf, "PNG", optimize=True)
+                if not dest.exists() or dest.read_bytes() != buf.getvalue():
+                    dest.write_bytes(buf.getvalue())
+                rel = f"logos/web/{dest.name}"
+                keep.add(dest.name)
+            except Exception as e:
+                log("could not clean logo", f.name, e)
+        manifest[key] = file_version(rel)
+    for old in out_dir.glob("*.png"):
+        if old.name not in keep:
+            old.unlink()
+    return manifest
 
 
 def trim_logos():
