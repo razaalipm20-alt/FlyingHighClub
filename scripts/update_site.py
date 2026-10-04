@@ -53,7 +53,7 @@ CONTACT_EMAIL = "raza.ali@theflyinghighclub.com"
 
 # Use downloaded episode artwork / YouTube thumbnails on the roster when a guest
 # has no styled photo yet. Off = cards show the guest's initials instead.
-USE_AUTO_ARTWORK = False
+USE_AUTO_ARTWORK = True
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
