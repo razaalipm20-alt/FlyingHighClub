@@ -6,12 +6,13 @@ on:
       - "data/**"
   schedule:
     - cron: "17 * * * *"          # every hour
-  workflow_dispatch:               # "Run workflow" button in the Actions tab
-  repository_dispatch:             # lets your Flask app trigger an instant update
+  workflow_dispatch:
+  repository_dispatch:
     types: [new-episode]
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: update-site
@@ -22,27 +23,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: main
 
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
-      - name: Install image tools
-        run: pip install pillow
+      - name: Install tools
+        run: pip install pillow numpy
 
       - name: Read RSS + YouTube and rebuild episode sections
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
         run: python scripts/update_site.py
 
       - name: Publish changes (Cloudflare redeploys automatically)
+        id: publish
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            git config user.name  "fhc-site-bot"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add -A
-            git commit -m "Auto-update: episodes from podcast feed"
-            git push
-          else
-            echo "Nothing new — site unchanged."
-          fi
+          if [ -z "$(git status --porcelain)" ]; then echo "Nothing new — site unchanged."; exit 0; fi
+          if [ -n "$(git status --porcelain site/guests/auto data)" ]; then echo "restyle=yes" >> "$GITHUB_OUTPUT"; fi
+          git config user.name  "fhc-site-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Auto-update: episodes from podcast feed"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -X theirs origin main && git push origin HEAD:main && exit 0
+            echo "Push clashed with another update, retrying ($i)..."; sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Style any new artwork
+        if: steps.publish.outputs.restyle == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run style-photos.yml --ref main
