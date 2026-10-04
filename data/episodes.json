@@ -33,11 +33,12 @@
       "airline",
       "disruption"
     ],
-    "photo": "",
+    "photo": "guests/sohail-ali.jpg",
     "photoPosition": "",
     "youtube": "",
     "number": 2,
-    "artwork": "guests/auto/art-guid02.jpg"
+    "artwork": "guests/auto/art-guid02.jpg",
+    "photoSource": "artwork"
   },
   {
     "guid": "276f16b2-818c-49e5-bf80-61b92d2a72d2",
@@ -137,10 +138,11 @@
       "pivoting",
       "collaboration"
     ],
-    "photo": "",
+    "photo": "guests/bill-mckimm.jpg",
     "photoPosition": "",
     "youtube": "",
-    "artwork": "guests/auto/art-fa1f01d4c38848a785841637.jpg"
+    "artwork": "guests/auto/art-fa1f01d4c38848a785841637.jpg",
+    "photoSource": "artwork"
   },
   {
     "guid": "ef246bbd-7bb4-4282-9497-e7e96679f798",
@@ -157,10 +159,11 @@
       "leadership",
       "c-suite"
     ],
-    "photo": "",
+    "photo": "guests/ben-sehovic.jpg",
     "photoPosition": "",
     "youtube": "",
-    "artwork": "guests/auto/art-ef246bbd7bb442829497e7e9.jpg"
+    "artwork": "guests/auto/art-ef246bbd7bb442829497e7e9.jpg",
+    "photoSource": "artwork"
   },
   {
     "guid": "f9dfbe4a-ca19-4d8d-a5b1-b96af2fd1087",
@@ -178,10 +181,11 @@
       "waf",
       "covid"
     ],
-    "photo": "",
+    "photo": "guests/daniel-boyle.jpg",
     "photoPosition": "",
     "youtube": "",
-    "artwork": "guests/auto/art-f9dfbe4aca194d8da5b1b96a.jpg"
+    "artwork": "guests/auto/art-f9dfbe4aca194d8da5b1b96a.jpg",
+    "photoSource": "artwork"
   },
   {
     "guid": "d3b786c7-eb24-4539-bde7-c5e0150b022e",
