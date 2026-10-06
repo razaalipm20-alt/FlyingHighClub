@@ -221,6 +221,15 @@ def prepare_subject(src, session):
     im.thumbnail((2400, 2400))
     cut = remove(im, session=session)
     a = np.array(cut.split()[-1])
+    # pale clothing on a pale background can come out half see-through: make the inside of the figure solid again
+    # (only where the cut-out already found something, so real gaps such as between an arm and the body stay open)
+    try:
+        from scipy import ndimage
+        inner = ndimage.binary_erosion(a > 24, iterations=4)
+        a = np.where(inner & (a >= 24), 255, a).astype("uint8")
+        cut.putalpha(Image.fromarray(a))
+    except Exception:
+        pass
     ys, xs = np.where(a > 40)
     if not len(ys):
         raise ValueError("no person found in photo")

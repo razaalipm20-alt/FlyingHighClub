@@ -5568,15 +5568,21 @@ const SITE = {
   // Guest map — add, remove or edit cities. "hub: true" marks home base (routes draw from it).
   // label: where the code sits next to the pin — "right" | "left" | "above" | "below"
   routes: [
-    { code: "LHR", city: "London",      lat: 51.47, lon:  -0.45, hub: true, label: "left"  },
-    { code: "FRA", city: "Frankfurt",   lat: 50.03, lon:   8.57,            label: "right" },
-    { code: "JFK", city: "New York",    lat: 40.64, lon: -73.78,            label: "right" },
-    { code: "LAX", city: "Los Angeles", lat: 33.94, lon:-118.41,            label: "right" },
-    { code: "DXB", city: "Dubai",       lat: 25.25, lon:  55.36,            label: "above" },
-    { code: "AUH", city: "Abu Dhabi",   lat: 24.43, lon:  54.65,            label: "below" },
-    { code: "DEL", city: "Delhi",       lat: 28.56, lon:  77.10,            label: "right" },
-    { code: "SIN", city: "Singapore",   lat:  1.36, lon: 103.99,            label: "right" },
-    { code: "HND", city: "Tokyo",       lat: 35.55, lon: 139.78,            label: "right" }
+    { code: "LHR", city: "London",        lat:  51.47, lon:   -0.45, hub: true, label: "left"  },
+    { code: "BER", city: "Berlin",        lat:  52.36, lon:   13.50,            label: "right" },
+    { code: "OSL", city: "Oslo",          lat:  60.19, lon:   11.10,            label: "above" },
+    { code: "GVA", city: "Geneva",        lat:  46.24, lon:    6.11,            label: "below" },
+    { code: "JFK", city: "New York",      lat:  40.64, lon:  -73.78,            label: "right" },
+    { code: "MIA", city: "Miami",         lat:  25.79, lon:  -80.29,            label: "right" },
+    { code: "SFO", city: "San Francisco", lat:  37.62, lon: -122.38,            label: "left"  },
+    { code: "LAX", city: "Los Angeles",   lat:  33.94, lon: -118.41,            label: "right" },
+    { code: "DXB", city: "Dubai",         lat:  25.25, lon:   55.36,            label: "above" },
+    { code: "AUH", city: "Abu Dhabi",     lat:  24.43, lon:   54.65,            label: "below" },
+    { code: "JED", city: "Jeddah",        lat:  21.68, lon:   39.16,            label: "left"  },
+    { code: "NBO", city: "Nairobi",       lat:  -1.32, lon:   36.93,            label: "right" },
+    { code: "DEL", city: "Delhi",         lat:  28.56, lon:   77.10,            label: "right" },
+    { code: "SIN", city: "Singapore",     lat:   1.36, lon:  103.99,            label: "right" },
+    { code: "HND", city: "Tokyo",         lat:  35.55, lon:  139.78,            label: "right" }
   ],
 
   // The Roster (guest cards): newest episodes + the ones marked "featured": true in data/episodes.json.
@@ -5586,14 +5592,16 @@ const SITE = {
   // "Guests have joined us from" — ranked list, most important first.
   // Only companies with a logo file in site/logos/ are shown (matched by name automatically), up to maxLogos.
   // To add one: upload its logo and put the name in this list where you want it ranked.
-  logoCarousel: { maxLogos: 16, logosOnly: true },
+  logoCarousel: { maxLogos: 20, logosOnly: true },
   guestCompanies: [
     { name: "IATA" },
     { name: "American Airlines" },
     { name: "Emirates" },
     { name: "Star Alliance" },
+    { name: "Dubai Airports" },
     { name: "Wizz Air" },
     { name: "IAG" },
+    { name: "Microsoft" },
     { name: "JetBlue Ventures" },
     { name: "San Francisco International Airport" },
     { name: "Kenya Airways" },
@@ -5604,8 +5612,11 @@ const SITE = {
     { name: "Miami International Airport" },
     { name: "flyadeal" },
     { name: "Berlin Airport" },
-    { name: "Fetcherr" },
+    { name: "FLYR" },
+    { name: "GTR" },
     { name: "i6 Group" },
+    { name: "Fetcherr" },
+    { name: "Venari Partners" },
     { name: "Air Sheriff" }
   ],
 
