@@ -370,13 +370,14 @@
     "summary": "\"David Neeleman on Airline Challenges, Decarbonization, and the Secret Sauce to Building Successful Airlines \" In this episode of The Flying High Club, we sit down with David Neeleman, Founder and CEO of Breeze Airways and one…",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/david-neeleman.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=oD2LHG1iNto",
     "artwork": "guests/auto/art-oD2LHG1iNto.jpg",
     "ytPublished": "2025-06-03",
     "ytSeconds": 1853,
-    "featured": true
+    "featured": true,
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
@@ -388,13 +389,14 @@
     "summary": "\"Challenging the Norm: Bjørn Tore Larsen, CEO of Norse Atlantic, on Affordable & Sustainable Transatlantic Travel \" In this episode of The Flying High Club, we sit down with Bjørn Tore Larsen, CEO of Norse Atlantic Airways, to…",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/bjorn-tore-larsen.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=CVsKICb6XFE",
     "artwork": "guests/auto/art-CVsKICb6XFE.jpg",
     "ytPublished": "2025-06-16",
     "ytSeconds": 1522,
-    "featured": true
+    "featured": true,
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
@@ -424,12 +426,13 @@
     "summary": "We sit down with James Parker from Venari Partners, one of the most respected executive search and talent partners in global aviation. This conversation goes beyond recruitment.",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/james-parker.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=ymzGuMXL-Co",
     "artwork": "guests/auto/art-ymzGuMXLCo.jpg",
     "ytPublished": "2026-02-06",
-    "ytSeconds": 2666
+    "ytSeconds": 2666,
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
@@ -460,12 +463,13 @@
     "summary": "What does it take to transform one of Europe's busiest airports into a truly passenger-first experience?",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/christian-draegar.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=fRi9Y7_hqfY",
     "artwork": "guests/auto/art-fRi9Y7hqfY.jpg",
     "ytPublished": "2026-03-15",
-    "ytSeconds": 1579
+    "ytSeconds": 1579,
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
@@ -477,12 +481,13 @@
     "summary": "In this first episode, we sit down with Alex Mattos, Co-Founder of i6 Group — the aviation technology company quietly revolutionising how every single flight gets fuelled.",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/alex-mattos.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=0E37G75OLk0",
     "artwork": "guests/auto/art-0E37G75OLk0.jpg",
     "ytPublished": "2026-04-02",
-    "ytSeconds": 3314
+    "ytSeconds": 3314,
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
@@ -494,12 +499,13 @@
     "summary": "We’re joined by Ibraheem Sheerah from Saudia Group for a forward-looking conversation on how AI is transforming the aviation industry and why investing in the next generation of talent has never been more critical.",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/ibraheem-sheerah.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=b7lU4tBTHfQ",
     "artwork": "guests/auto/art-b7lU4tBTHfQ.jpg",
     "ytPublished": "2026-04-28",
-    "ytSeconds": 2399
+    "ytSeconds": 2399,
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
@@ -511,13 +517,14 @@
     "summary": "In this exclusive episode, we sit down with the CEO of San Francisco International Airport (SFO) — one of the world’s most innovative and forward-thinking airports — for a fascinating conversation about leadership, innovation,…",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/mike-nakornkhet.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=BHAhQ4PfW1Y",
     "artwork": "guests/auto/art-BHAhQ4PfW1Y.jpg",
     "ytPublished": "2026-05-28",
     "ytSeconds": 2046,
-    "featured": true
+    "featured": true,
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
@@ -529,12 +536,13 @@
     "summary": "",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/hadar-sharvit.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=livhHhQCsnE",
     "artwork": "guests/auto/art-livhHhQCsnE.jpg",
     "ytPublished": "2026-06-11",
-    "ytSeconds": 1738
+    "ytSeconds": 1738,
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
@@ -546,12 +554,13 @@
     "summary": "",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/musdalifa-abdullah.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=G6Cvpd1vidM",
     "artwork": "guests/auto/art-G6Cvpd1vidM.jpg",
     "ytPublished": "2026-07-03",
-    "ytSeconds": 2290
+    "ytSeconds": 2290,
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
@@ -563,14 +572,15 @@
     "summary": "Airline loyalty is being rewritten — and the two women leading that change at Star Alliance sit down together for the first time on The Flying High Club.",
     "quote": "",
     "topics": [],
-    "photo": "guests/ambar-franco.jpg",
+    "photo": "guests/inside-star-alliance-the-future-of-airline-loyalty-customer-.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=KeLAWzbWn5w",
     "artwork": "guests/auto/art-KeLAWzbWn5w.jpg",
     "ytPublished": "2026-08-18",
     "ytSeconds": 1930,
     "featured": true,
-    "photoSource": "upload"
+    "photoSource": "upload",
+    "duo": true
   },
   {
     "youtubeOnly": true,
@@ -663,10 +673,11 @@
     "summary": "The CEO of Dubai Airports on leading the airport's growth journey and what it takes to build the world's best airport.",
     "quote": "",
     "topics": [],
-    "photo": "",
+    "photo": "guests/paul-griffiths.jpg",
     "photoPosition": "",
     "youtube": "https://www.youtube.com/watch?v=izWoxjCAMnU",
-    "artwork": "guests/auto/art-izWoxjCAMnU.jpg"
+    "artwork": "guests/auto/art-izWoxjCAMnU.jpg",
+    "photoSource": "upload"
   },
   {
     "youtubeOnly": true,
