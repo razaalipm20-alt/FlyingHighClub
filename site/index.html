@@ -3313,6 +3313,20 @@ a.instrument { color: inherit; text-decoration: none; }
 }
 .audio-toggle { width: 38px; }
 .replay-boot { padding: 0 0.85rem; }
+.nav-guest {
+  padding: 0.6rem 1.1rem; border: 1px solid rgba(230, 166, 70, 0.55); border-radius: 999px;
+  font-size: 0.82rem; letter-spacing: 0.03em; color: var(--runway-amber); white-space: nowrap;
+  transition: all 0.25s var(--ease-aviation);
+}
+.nav-guest:hover, .nav-guest:focus-visible { background: var(--runway-amber); color: var(--hangar-black); border-color: var(--runway-amber); }
+@media (max-width: 560px) { .nav-guest { padding: 0.55rem 0.8rem; } }
+.nav-brand span { white-space: nowrap; }
+@media (max-width: 1240px) {
+  .replay-text { display: none; }
+  .replay-boot { width: 38px; padding: 0; justify-content: center; }
+}
+@media (max-width: 1020px) { .nav-links { display: none; } }
+@media (max-width: 350px) { .replay-boot { display: none; } .nav-actions { gap: 0.45rem; } }
 
 .hero-content {
   top: 76px;
@@ -3959,14 +3973,7 @@ body.booted .grain { animation: boot-grain 0.9s 0.6s var(--ease-aviation) forwar
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
   <span class="replay-text">Replay boot</span>
 </button>
-<button class="audio-toggle" id="audioToggle" aria-label="Toggle ambient cockpit audio" title="Toggle ambient cockpit audio">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-    <line class="slash" x1="4" y1="20" x2="20" y2="4" stroke="#E6A646" stroke-width="2"/>
-  </svg>
-</button>
+  <a href="#be-a-guest" data-form="guest" class="nav-guest">Be a guest</a>
   <a href="#subscribe" class="nav-cta">
     <span class="live-dot"></span>
     Subscribe
@@ -5558,7 +5565,7 @@ const SITE = {
   //     opens with the message pre-filled, which still works but is one extra click for them.
   forms: {
     sendTo:       "raza.ali@theflyinghighclub.com",
-    web3formsKey: ""
+    web3formsKey: "b746c681-5807-4404-ab82-5ab135a8a12c"
   },
 
   // Audience & reach — the expanding panel in the "For partners" section (replaces the media kit download).
@@ -6201,15 +6208,6 @@ const SITE = {
       if (window.__runEicas) setTimeout(window.__runEicas, reducedMotion ? 0 : 1800);
       clearTimeout(bootTimer);
       bootTimer = setTimeout(() => document.body.classList.add('boot-complete'), reducedMotion ? 0 : 2600);
-    });
-  }
-
-  // -------------------- AUDIO TOGGLE --------------------
-  // Visual only in this demo; production wires to Howler.js for cabin hum + chimes
-  const audioBtn = document.getElementById('audioToggle');
-  if (audioBtn) {
-    audioBtn.addEventListener('click', () => {
-      audioBtn.classList.toggle('active');
     });
   }
 
