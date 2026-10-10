@@ -594,6 +594,7 @@ Airlines and airline strategy, airports and airport innovation, ground handling,
 
 ## Contact
 Sponsorship, guest suggestions and press: {SITE_URL}#advertise · {SITE_URL}#be-a-guest · {SITE_URL}#press
+Event partnerships (official podcast partner for aviation events, on-site video podcast studio): {SITE_URL}events
 """
 
 

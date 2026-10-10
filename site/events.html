@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Event Partnerships · The Flying High Club</title>
+<meta name="description" content="Make The Flying High Club your event's official podcast partner. A video podcast studio on your show floor, long-form conversations with your speakers, and episodes that keep your event in front of a senior aviation audience for months.">
+<link rel="canonical" href="https://www.theflyinghighclub.com/events">
+<meta name="theme-color" content="#0B0E12">
+<link rel="icon" type="image/png" href="/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Flying High Club">
+<meta property="og:title" content="Event Partnerships · The Flying High Club">
+<meta property="og:description" content="Make The Flying High Club your event's official podcast partner. A video podcast studio on your show floor, long-form conversations with your speakers, and episodes that keep your event in front of a senior aviation audience for months.">
+<meta property="og:url" content="https://www.theflyinghighclub.com/events">
+<meta property="og:image" content="https://www.theflyinghighclub.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Service","name":"Event podcast partnerships","serviceType":"On-site video podcast production for aviation events",
+"description":"Make The Flying High Club your event's official podcast partner. A video podcast studio on your show floor, long-form conversations with your speakers, and episodes that keep your event in front of a senior aviation audience for months.","url":"https://www.theflyinghighclub.com/events","areaServed":"Worldwide",
+"provider":{"@type":"Organization","name":"The Flying High Club","url":"https://www.theflyinghighclub.com/","logo":"https://www.theflyinghighclub.com/logo.png"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one pitch read top to bottom. Thesis hero with real guest portraits, proof strip, the offer,
+   a flight-plan timeline (before / on the show floor / after), the World Aviation Festival case,
+   guests, episodes, audience, formats, questions, enquiry. Single dark look: the show's own brand. */
+:root {
+  color-scheme: dark;
+  --hangar-black: #0B0E12;
+  --hangar-black-2: #10141b;
+  --panel: #0e1218;
+  --altitude-navy: #0E2A47;
+  --cabin-bone: #F2EDE3;
+  --cabin-bone-dim: #c9c3b7;
+  --cabin-bone-faint: rgba(242, 237, 227, 0.14);
+  --instrument-cyan: #5BC0EB;
+  --runway-amber: #E6A646;
+  --brass: #B79268;
+  --brass-line: rgba(183, 146, 104, 0.28);
+  --f-display: 'Fraunces', Georgia, serif;
+  --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --max: 1280px;
+  --section-y: clamp(4rem, 9vw, 7rem);
+  --ease: cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0; background: var(--hangar-black); color: var(--cabin-bone);
+  font-family: var(--f-sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; line-height: 1.06; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--runway-amber); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: var(--section-y); }
+.section.alt { background: var(--panel); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--instrument-cyan); font-weight: 500; }
+.eyebrow.brass { color: var(--brass); }
+.eyebrow.amber { color: var(--runway-amber); }
+.h2 { font-size: clamp(2rem, 4.4vw, 3.4rem); margin-top: 0.9rem; }
+.lede { color: var(--cabin-bone-dim); font-size: 1.08rem; line-height: 1.7; max-width: 62ch; margin-top: 1.1rem; }
+.head { max-width: 760px; }
+
+.btn { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.95rem 1.5rem; border-radius: 999px; font-size: 0.92rem; font-weight: 500; letter-spacing: 0.02em; transition: all 0.3s var(--ease); }
+.btn-amber { background: var(--runway-amber); color: var(--hangar-black); }
+.btn-amber:hover { background: var(--cabin-bone); transform: translateY(-1px); box-shadow: 0 10px 30px rgba(230, 166, 70, 0.3); }
+.btn-ghost { border: 1px solid rgba(242, 237, 227, 0.3); color: var(--cabin-bone); }
+.btn-ghost:hover { border-color: var(--cabin-bone); background: rgba(242, 237, 227, 0.07); }
+
+/* ---------- nav ---------- */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(11, 14, 18, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--cabin-bone-faint); }
+.nav-in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.8rem; }
+.brand { display: flex; align-items: center; gap: 0.7rem; font-family: var(--f-display); font-size: 1.05rem; white-space: nowrap; }
+.brand img { width: 30px; height: 30px; border-radius: 6px; }
+.brand small { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); margin-left: 0.5rem; padding-left: 0.75rem; border-left: 1px solid var(--brass-line); }
+.nav-links { display: flex; gap: 1.8rem; font-size: 0.9rem; color: var(--cabin-bone-dim); }
+.nav-links a:hover { color: var(--cabin-bone); }
+.nav-cta { padding: 0.6rem 1.1rem; border: 1px solid rgba(230, 166, 70, 0.55); border-radius: 999px; font-size: 0.82rem; color: var(--runway-amber); white-space: nowrap; transition: all 0.25s var(--ease); }
+.nav-cta:hover { background: var(--runway-amber); color: var(--hangar-black); }
+@media (max-width: 980px) { .nav-links { display: none; } }
+@media (max-width: 520px) { .brand small { display: none; } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3.5rem, 7vw, 6rem);
+  background:
+    radial-gradient(900px 520px at 78% 30%, rgba(14, 42, 71, 0.95), transparent 70%),
+    radial-gradient(rgba(91, 192, 235, 0.16) 1px, transparent 1.4px) 0 0 / 22px 22px,
+    var(--hangar-black);
+}
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.partner-badge { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.45rem 0.9rem; border: 1px solid var(--brass-line); border-radius: 999px; font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); background: rgba(11, 14, 18, 0.55); }
+.lockup { display: inline-flex; align-items: center; gap: 1rem; padding: 0.7rem 1.1rem 0.7rem 0.9rem; border: 1px solid var(--brass-line); border-radius: 10px; background: rgba(11, 14, 18, 0.55); }
+.lockup img { width: 118px; height: auto; }
+.lockup-txt { display: inline-flex; align-items: center; gap: 0.55rem; padding-left: 1rem; border-left: 1px solid var(--brass-line); font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); }
+.lockup-txt i { width: 6px; height: 6px; border-radius: 50%; background: var(--runway-amber); box-shadow: 0 0 8px var(--runway-amber); }
+@media (max-width: 420px) { .lockup img { width: 96px; } .lockup-txt { font-size: 0.6rem; padding-left: 0.8rem; } }
+.partner-badge i { width: 6px; height: 6px; border-radius: 50%; background: var(--runway-amber); box-shadow: 0 0 8px var(--runway-amber); }
+.hero h1 { font-size: clamp(2.6rem, 6.2vw, 5rem); margin-top: 1.4rem; }
+.hero h1 em { font-style: italic; color: var(--runway-amber); }
+.hero .lede { font-size: 1.14rem; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+.fan { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; padding: 1.5rem 0.5rem; }
+.fan figure { margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--brass-line); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6); background: var(--hangar-black-2); transition: transform 0.5s var(--ease); }
+.fan img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.fan figcaption { padding: 0.6rem 0.7rem 0.7rem; }
+.fan .n { font-family: var(--f-display); font-size: 0.98rem; line-height: 1.2; }
+.fan .r { font-family: var(--f-mono); font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cabin-bone-dim); margin-top: 0.25rem; }
+.fan figure:nth-child(1) { transform: rotate(-5deg) translate(1%, 5%); }
+.fan figure:nth-child(2) { transform: scale(1.05); z-index: 2; }
+.fan figure:nth-child(3) { transform: rotate(5deg) translate(-1%, 5%); }
+.fan figure:nth-child(3) figcaption { text-align: right; }
+.fan:hover figure:nth-child(1) { transform: rotate(-7deg) translate(0, 5%); }
+.fan:hover figure:nth-child(3) { transform: rotate(7deg) translate(0, 5%); }
+@media (max-width: 560px) { .fan .r { display: none; } .fan .n { font-size: 0.82rem; } .fan figcaption { padding: 0.45rem 0.5rem 0.55rem; } }
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .fan { max-width: 520px; margin-inline: auto; padding-inline: 1.5rem; }
+}
+
+/* ---------- proof strip ---------- */
+.proof { border-block: 1px solid var(--cabin-bone-faint); background: var(--hangar-black-2); }
+.proof-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.proof-grid > div { padding: 1.7rem 1.2rem; border-left: 1px solid var(--cabin-bone-faint); }
+.proof-grid > div:first-child { border-left: 0; padding-left: 0; }
+.num { font-family: var(--f-display); font-size: clamp(2rem, 4vw, 3rem); line-height: 1; color: var(--cabin-bone); font-variant-numeric: tabular-nums; }
+.lab { font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cabin-bone-dim); margin-top: 0.55rem; }
+.proof-note { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.1em; color: var(--brass); padding-block: 0 1rem; text-transform: uppercase; }
+@media (max-width: 760px) {
+  .proof-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .proof-grid > div:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .proof-grid > div:nth-child(n+3) { border-top: 1px solid var(--cabin-bone-faint); }
+}
+
+/* ---------- offer ---------- */
+.offer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 3rem; border-top: 1px solid var(--cabin-bone-faint); }
+.offer { padding: 1.8rem 1.6rem 1.9rem 0; border-bottom: 1px solid var(--cabin-bone-faint); }
+.offer + .offer { padding-left: 1.6rem; border-left: 1px solid var(--cabin-bone-faint); }
+.offer:nth-child(3n+1) { padding-left: 0; border-left: 0; }
+.offer svg { width: 30px; height: 30px; stroke: var(--instrument-cyan); fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.offer h3 { font-size: 1.4rem; margin-top: 1rem; }
+.offer p { color: var(--cabin-bone-dim); font-size: 0.95rem; margin-top: 0.6rem; }
+@media (max-width: 900px) {
+  .offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .offer:nth-child(3n+1) { padding-left: 1.6rem; border-left: 1px solid var(--cabin-bone-faint); }
+  .offer:nth-child(2n+1) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 560px) {
+  .offer-grid { grid-template-columns: 1fr; }
+  .offer, .offer + .offer, .offer:nth-child(3n+1) { padding-left: 0; padding-right: 0; border-left: 0; }
+}
+.floor { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; margin-top: 2.6rem; }
+.clip { position: relative; margin: 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--cabin-bone-faint); background: var(--hangar-black-2); }
+.clip video, .clip img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; }
+.clip figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.4rem 0.9rem 0.8rem; background: linear-gradient(rgba(11, 14, 18, 0), rgba(11, 14, 18, 0.88)); font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cabin-bone); line-height: 1.5; }
+.rec { position: absolute; top: 0.7rem; left: 0.7rem; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.55rem; border-radius: 999px; background: rgba(11, 14, 18, 0.72); font-family: var(--f-mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cabin-bone); }
+.rec i { width: 6px; height: 6px; border-radius: 50%; background: #e5484d; box-shadow: 0 0 6px #e5484d; animation: rec 1.6s infinite; }
+@keyframes rec { 50% { opacity: 0.25; } }
+.strip-title { margin-top: 3.2rem; font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+.wafstrip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+@media (max-width: 900px) {
+  .floor { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wafstrip { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0.8rem; }
+  .wafstrip .clip { flex: 0 0 min(62vw, 260px); scroll-snap-align: start; }
+}
+@media (prefers-reduced-motion: reduce) { .rec i { animation: none; } }
+@media (max-width: 700px) { 
+/* ---------- flight plan ---------- */
+.plan { position: relative; margin-top: 3.2rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+.route { position: absolute; left: 0; right: 0; top: 21px; height: 2px; background: repeating-linear-gradient(90deg, var(--instrument-cyan) 0 10px, transparent 10px 20px); opacity: 0.55; }
+.leg { position: relative; padding-top: 3.4rem; }
+.leg::before { content: ""; position: absolute; top: 12px; left: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--panel); border: 2px solid var(--runway-amber); box-shadow: 0 0 0 5px var(--panel); }
+.leg::after { content: ""; position: absolute; top: 18px; left: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--runway-amber); }
+.leg-card { height: 100%; padding: 1.5rem 1.4rem 1.6rem; background: rgba(10, 13, 18, 0.7); border: 1px solid var(--brass-line); border-radius: 6px; }
+.leg-code { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+.leg h3 { font-size: 1.6rem; margin-top: 0.5rem; }
+.leg ul { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: 0.75rem; }
+.leg li { position: relative; padding-left: 1.2rem; color: var(--cabin-bone-dim); font-size: 0.95rem; line-height: 1.55; }
+.leg li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 7px; height: 1px; background: var(--instrument-cyan); }
+@media (max-width: 860px) {
+  .plan { grid-template-columns: 1fr; gap: 0; }
+  .route { left: 9px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; background: repeating-linear-gradient(180deg, var(--instrument-cyan) 0 10px, transparent 10px 20px); }
+  .leg { padding: 0 0 1.6rem 2.6rem; }
+  .leg::before { top: 1.4rem; }
+  .leg::after { top: calc(1.4rem + 6px); }
+}
+
+/* ---------- case study ---------- */
+.case { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.case-logo { width: min(260px, 60%); height: auto; margin-top: 1.4rem; }
+.case h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); margin-top: 0.9rem; }
+.facts { list-style: none; padding: 0; margin: 2rem 0 0; border-top: 1px solid var(--cabin-bone-faint); }
+.facts li { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 1rem; padding: 0.95rem 0; border-bottom: 1px solid var(--cabin-bone-faint); }
+.facts .k { font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); padding-top: 0.25rem; }
+.facts .v { color: var(--cabin-bone); font-size: 0.98rem; }
+.facts .v a { border-bottom: 1px solid var(--brass-line); }
+.facts .v a:hover { border-color: var(--cabin-bone); }
+.case-card { border: 1px solid var(--brass-line); border-radius: 10px; overflow: hidden; background: var(--hangar-black-2); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5); max-width: 420px; margin-inline: auto; }
+.case-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.case-card .cap { padding: 1.1rem 1.2rem 1.3rem; }
+.case-card .cap .t { font-family: var(--f-display); font-size: 1.3rem; line-height: 1.2; }
+.case-card .cap .m { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cabin-bone-dim); margin-top: 0.5rem; }
+.case-card .cap a { display: inline-flex; gap: 0.4rem; margin-top: 0.9rem; color: var(--runway-amber); font-size: 0.9rem; }
+@media (max-width: 860px) { .case { grid-template-columns: 1fr; } .facts li { grid-template-columns: 1fr; gap: 0.2rem; } }
+
+/* ---------- guests ---------- */
+.guests { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; margin-top: 3rem; }
+.guest { margin: 0; }
+.guest .ph { border-radius: 8px; overflow: hidden; border: 1px solid var(--cabin-bone-faint); transition: transform 0.4s var(--ease), border-color 0.4s; }
+.guest:hover .ph { transform: translateY(-4px); border-color: var(--brass); }
+.guest img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.guest .n { font-family: var(--f-display); font-size: 1.18rem; margin-top: 0.8rem; line-height: 1.2; }
+.guest .r { font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cabin-bone-dim); margin-top: 0.3rem; line-height: 1.5; }
+@media (max-width: 900px) { .guests { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- episodes ---------- */
+.strip { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1rem; margin-top: 2.6rem; scrollbar-color: var(--brass) transparent; }
+.ep { flex: 0 0 min(78vw, 380px); scroll-snap-align: start; border: 1px solid var(--cabin-bone-faint); border-radius: 8px; overflow: hidden; background: var(--hangar-black-2); transition: border-color 0.3s; }
+.ep:hover { border-color: var(--brass); }
+.ep img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.ep .b { padding: 0.9rem 1rem 1.05rem; }
+.ep .t { font-family: var(--f-display); font-size: 1.08rem; line-height: 1.25; }
+.ep .m { font-family: var(--f-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cabin-bone-dim); margin-top: 0.45rem; }
+.ep .w { color: var(--runway-amber); font-size: 0.82rem; margin-top: 0.6rem; }
+
+/* ---------- audience ---------- */
+.aud { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+.aud-col { border: 1px solid var(--cabin-bone-faint); border-radius: 8px; padding: 1.5rem 1.4rem; background: rgba(10, 13, 18, 0.6); }
+.aud-col h3 { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--instrument-cyan); font-weight: 500; }
+.aud-col dl { margin: 1.1rem 0 0; display: grid; gap: 0; }
+.aud-col .row { display: grid; grid-template-columns: 5.6rem minmax(0, 1fr); gap: 0.9rem; align-items: baseline; padding: 0.7rem 0; border-top: 1px solid var(--cabin-bone-faint); }
+.aud-col dt { font-family: var(--f-display); font-size: 1.55rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.aud-col dd { margin: 0; color: var(--cabin-bone-dim); font-size: 0.88rem; line-height: 1.4; }
+@media (max-width: 900px) { .aud { grid-template-columns: 1fr; } }
+
+/* ---------- formats ---------- */
+.formats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+.fmt { display: flex; flex-direction: column; padding: 1.7rem 1.5rem 1.6rem; border: 1px solid var(--brass-line); border-radius: 6px; background: rgba(10, 13, 18, 0.65); transition: border-color 0.3s, transform 0.3s var(--ease); }
+.fmt:hover { border-color: var(--brass); transform: translateY(-2px); }
+.fmt .k { font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+.fmt h3 { font-size: 1.7rem; margin-top: 0.6rem; }
+.fmt p { color: var(--cabin-bone-dim); font-size: 0.95rem; margin-top: 0.8rem; }
+.fmt ul { list-style: none; margin: 1.1rem 0 1.4rem; padding: 0; display: grid; gap: 0.5rem; }
+.fmt li { position: relative; padding-left: 1.2rem; font-size: 0.9rem; color: var(--cabin-bone); }
+.fmt li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 7px; height: 1px; background: var(--runway-amber); }
+.fmt button { margin-top: auto; align-self: flex-start; color: var(--runway-amber); font-size: 0.9rem; border-bottom: 1px solid rgba(230, 166, 70, 0.4); padding-bottom: 2px; }
+.fmt button:hover { border-color: var(--runway-amber); }
+.fits { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2.4rem; align-items: center; }
+.fits span { font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.fits .lead { color: var(--cabin-bone-dim); margin-right: 0.4rem; }
+.fits .chip { padding: 0.5rem 0.9rem; border: 1px solid var(--cabin-bone-faint); border-radius: 999px; color: var(--cabin-bone); }
+@media (max-width: 900px) { .formats { grid-template-columns: 1fr; } }
+
+/* ---------- faq ---------- */
+.faq { max-width: 860px; margin-top: 2.6rem; border-top: 1px solid var(--cabin-bone-faint); }
+.faq details { border-bottom: 1px solid var(--cabin-bone-faint); }
+.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1.25rem 0; font-family: var(--f-display); font-size: 1.3rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-mono); font-size: 1.1rem; color: var(--brass); transition: transform 0.3s var(--ease); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .a { color: var(--cabin-bone-dim); padding: 0 0 1.4rem; max-width: 65ch; }
+
+/* ---------- enquiry ---------- */
+.enq { background:
+    radial-gradient(800px 420px at 20% 0%, rgba(14, 42, 71, 0.9), transparent 70%),
+    var(--hangar-black); border-top: 1px solid var(--cabin-bone-faint); }
+.enq-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.enq h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); margin-top: 0.9rem; }
+.direct { margin-top: 2rem; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--cabin-bone-dim); }
+.direct b { display: block; margin-top: 0.4rem; font-family: var(--f-sans); font-size: 1rem; letter-spacing: 0; color: var(--cabin-bone); font-weight: 500; user-select: all; }
+.form { border: 1px solid var(--brass-line); border-radius: 10px; background: linear-gradient(160deg, #121a24, #0a0d12); padding: 1.8rem 1.6rem; }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; }
+.field { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-family: var(--f-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cabin-bone-dim); }
+.field input, .field select, .field textarea { width: 100%; font: inherit; font-size: 0.94rem; color: var(--cabin-bone); background: rgba(242, 237, 227, 0.04); border: 1px solid rgba(242, 237, 227, 0.16); border-radius: 6px; padding: 0.72rem 0.8rem; }
+.field select option { background: #121a24; }
+.field textarea { min-height: 110px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--runway-amber); box-shadow: 0 0 0 3px rgba(230, 166, 70, 0.15); }
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 1.2rem; }
+.form-msg { font-size: 0.86rem; color: var(--cabin-bone-dim); min-height: 1.3rem; }
+.form-msg.ok { color: var(--instrument-cyan); }
+.form-msg.err { color: #e8907c; }
+@media (max-width: 900px) { .enq-grid { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .fields { grid-template-columns: 1fr; } }
+
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form { position: relative; }
+
+/* ---------- footer ---------- */
+.foot { border-top: 1px solid var(--cabin-bone-faint); padding-block: 2rem; color: var(--cabin-bone-dim); font-size: 0.86rem; }
+.foot-in { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: center; }
+.foot nav { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+.foot a:hover { color: var(--cabin-bone); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/" aria-label="The Flying High Club, main site">
+      <img src="/logo.png" alt="" width="30" height="30">
+      <span>The Flying High Club</span>
+      <small>Event partnerships</small>
+    </a>
+    <nav class="nav-links" aria-label="On this page">
+      <a href="#offer">The offer</a>
+      <a href="#plan">How it works</a>
+      <a href="#waf">World Aviation Festival</a>
+      <a href="#audience">Audience</a>
+      <a href="#formats">Formats</a>
+    </nav>
+    <a class="nav-cta" href="#enquire">Talk to us</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="lockup"><img src="media/world-aviation-festival-white.png" alt="World Aviation Festival" width="900" height="399"><span class="lockup-txt"><i></i>Official podcast partner</span></div>
+        <h1>Keep your event talking <em>long after</em> the doors close.</h1>
+        <p class="lede">The Flying High Club is the aviation industry's video podcast. We build a studio on your show floor, sit your speakers down for the conversations a stage slot never has room for, and publish them to a senior aviation audience for months afterwards.</p>
+        <div class="hero-cta">
+          <a class="btn btn-amber" href="#enquire">Bring the studio to your event</a>
+          <a class="btn btn-ghost" href="#plan">See how it works</a>
+        </div>
+      </div>
+      <div class="fan" aria-label="Recent guests on the show">
+        <figure>
+          <img src="guests/paul-griffiths.jpg" alt="Paul Griffiths, CEO of Dubai Airports" width="900" height="1200">
+          <figcaption><div class="n">Paul Griffiths</div><div class="r">CEO · Dubai Airports</div></figcaption>
+        </figure>
+        <figure>
+          <img src="guests/willie-walsh.jpg" alt="Willie Walsh, Director General of IATA" width="900" height="1200">
+          <figcaption><div class="n">Willie Walsh</div><div class="r">Director General · IATA</div></figcaption>
+        </figure>
+        <figure>
+          <img src="guests/heather-garboden.jpg" alt="Heather Garboden, Chief Customer Officer of American Airlines" width="900" height="1200">
+          <figcaption><div class="n">Heather Garboden</div><div class="r">Chief Customer Officer · American Airlines</div></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof" aria-label="The show in numbers">
+    <div class="wrap">
+      <div class="proof-grid">
+        <div><div class="num">90K+</div><div class="lab">Total YouTube views</div></div>
+        <div><div class="num">6,000+</div><div class="lab">YouTube watch hours</div></div>
+        <div><div class="num">11K+</div><div class="lab">Combined LinkedIn network</div></div>
+        <div><div class="num">15</div><div class="lab">Countries with listeners</div></div>
+      </div>
+      <p class="proof-note">Figures as of October 2026</p>
+    </div>
+  </section>
+
+  <section class="section" id="offer">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">The offer</span>
+        <h2 class="h2">A video podcast studio, on your show floor.</h2>
+        <p class="lede">Your event gathers the people the whole industry wants to hear from. Most of what they say is heard once, by the room, and then it is gone. We record it properly and give it a second life.</p>
+      </div>
+      <div class="offer-grid">
+        <article class="offer">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="9" width="17" height="14" rx="2"/><path d="M21 14l7-4v12l-7-4z"/><path d="M8 27h9"/></svg>
+          <h3>The studio comes to you</h3>
+          <p>We bring the set, cameras, lighting and microphones, and build a working video podcast studio inside your venue.</p>
+        </article>
+        <article class="offer">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="12" y="3" width="8" height="15" rx="4"/><path d="M7 15a9 9 0 0 0 18 0M16 24v5M11 29h10"/></svg>
+          <h3>Your speakers, in long form</h3>
+          <p>A stage slot is short. We sit your headline speakers down for the full conversation, the one delegates wish they had heard.</p>
+        </article>
+        <article class="offer">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6h22v15H5zM5 26h22"/><path d="M10 11h7M10 15h12"/></svg>
+          <h3>Your event's name on every episode</h3>
+          <p>Each episode is titled and credited as recorded at your event, on screen and in the description, wherever it is watched.</p>
+        </article>
+        <article class="offer">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M13 11l8 5-8 5z"/></svg>
+          <h3>Published where the industry watches</h3>
+          <p>Full video on YouTube. Audio on Spotify, Apple Podcasts and Amazon Music. Shared with our network on LinkedIn.</p>
+        </article>
+        <article class="offer">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3"/><path d="M14 13l5 3-5 3z"/></svg>
+          <h3>Clips that keep it travelling</h3>
+          <p>After the event we cut short clips from each interview for your social channels and ours, so the conversations keep reaching people long after the show.</p>
+        </article>
+        <article class="offer">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 26V10l12-6 12 6v16"/><path d="M11 26v-8h10v8M4 26h24"/></svg>
+          <h3>A studio your sponsors can own</h3>
+          <p>The studio is a new piece of inventory for your sales team: naming rights, a branded backdrop and guest slots for your sponsors.</p>
+        </article>
+      </div>
+      <div class="floor">
+        <figure class="clip"><video muted loop playsinline preload="metadata" poster="media/studio-floor.jpg" data-loop aria-label="Our studio on the show floor"><source src="media/studio-floor.mp4" type="video/mp4"></video><span class="rec"><i></i>Rec</span><figcaption>Our studio on the show floor</figcaption></figure>
+        <figure class="clip"><video muted loop playsinline preload="metadata" poster="media/behind-cameras.jpg" data-loop aria-label="Multi-camera, fully lit set"><source src="media/behind-cameras.mp4" type="video/mp4"></video><span class="rec"><i></i>Rec</span><figcaption>Multi-camera, fully lit set</figcaption></figure>
+        <figure class="clip"><video muted loop playsinline preload="metadata" poster="media/panel.jpg" data-loop aria-label="Group conversations as well as one-to-ones"><source src="media/panel.mp4" type="video/mp4"></video><span class="rec"><i></i>Rec</span><figcaption>Group conversations as well as one-to-ones</figcaption></figure>
+        <figure class="clip"><video muted loop playsinline preload="metadata" poster="media/lounge-set.jpg" data-loop aria-label="A lounge set for longer conversations"><source src="media/lounge-set.mp4" type="video/mp4"></video><span class="rec"><i></i>Rec</span><figcaption>A lounge set for longer conversations</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="plan">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow brass">How it works</span>
+        <h2 class="h2">From first call to final episode.</h2>
+        <p class="lede">One plan, three legs. Your team's work is mostly at the start: after that we run the studio and the releases.</p>
+      </div>
+      <div class="plan">
+        <div class="route" aria-hidden="true"></div>
+        <article class="leg">
+          <div class="leg-card">
+            <div class="leg-code">Pre-flight · before the event</div>
+            <h3>Plan the line-up</h3>
+            <ul>
+              <li>We agree the guest list with your speaker team.</li>
+              <li>We fix where the studio sits and the recording schedule.</li>
+              <li>Both of us announce the partnership and the guests.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="leg">
+          <div class="leg-card">
+            <div class="leg-code">On the show floor · during</div>
+            <h3>Record on site</h3>
+            <ul>
+              <li>The studio is built and tested before doors open.</li>
+              <li>We record with your speakers, exhibitors and sponsors through the day.</li>
+              <li>Delegates can stop and watch conversations being made.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="leg">
+          <div class="leg-card">
+            <div class="leg-code">After landing · the months that follow</div>
+            <h3>Release and report</h3>
+            <ul>
+              <li>Episodes come out one at a time, each crediting your event.</li>
+              <li>You receive clips and highlights for your own marketing.</li>
+              <li>A report on views and reach is available on request.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="waf">
+    <div class="wrap case">
+      <div>
+        <span class="eyebrow amber">Where we already do this</span>
+        <img class="case-logo" src="media/world-aviation-festival-white.png" alt="" width="900" height="399">
+        <h2>World Aviation Festival</h2>
+        <p class="lede">We are the festival's official podcast partner. The studio sits on the show floor and the people on the main stage come and sit down with us.</p>
+        <ul class="facts">
+          <li><span class="k">Our role</span><span class="v">Official podcast partner</span></li>
+          <li><span class="k">Recorded there</span><span class="v">Willie Walsh, Director General of IATA, at World Aviation Festival, Lisbon 2025. <a href="https://www.youtube.com/watch?v=9c2ZjJiivJ8" target="_blank" rel="noopener">Watch the episode</a></span></li>
+          <li><span class="k">The organiser</span><span class="v">Daniel Boyle of Terrapin, the team behind the festival, joined the show to tell how it grew from 200 attendees to 5,000. <a href="https://www.youtube.com/watch?v=IU-irZIeG0Y" target="_blank" rel="noopener">Watch the episode</a></span></li>
+          <li><span class="k">Also on site</span><span class="v">Aviation Festival Asia 2026</span></li>
+        </ul>
+      </div>
+      <figure class="case-card" style="margin-block:0">
+        <img src="guests/willie-walsh.jpg" alt="Willie Walsh, Director General of IATA" width="900" height="1200" loading="lazy">
+        <figcaption class="cap">
+          <div class="t">The real reason why airlines go bankrupt</div>
+          <div class="m">Willie Walsh · IATA · Recorded at World Aviation Festival, Lisbon 2025</div>
+          <a href="https://www.youtube.com/watch?v=9c2ZjJiivJ8" target="_blank" rel="noopener">Watch on YouTube →</a>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="wrap">
+      <p class="strip-title">Our co-branded studio at World Aviation Festival</p>
+      <div class="wafstrip">
+        <figure class="clip"><video muted loop playsinline preload="metadata" poster="media/waf-table.jpg" data-loop aria-label="Recording on the festival floor"><source src="media/waf-table.mp4" type="video/mp4"></video><span class="rec"><i></i>Rec</span><figcaption>Recording on the festival floor</figcaption></figure>
+        <figure class="clip"><img src="media/waf-photo-3.jpg" alt="Recording in the co-branded studio at World Aviation Festival" width="799" height="1066" loading="lazy"></figure>
+        <figure class="clip"><img src="media/waf-photo-1.jpg" alt="Recording in the co-branded studio at World Aviation Festival" width="799" height="1066" loading="lazy"></figure>
+        <figure class="clip"><img src="media/waf-photo-2.jpg" alt="Recording in the co-branded studio at World Aviation Festival" width="799" height="1066" loading="lazy"></figure>
+        <figure class="clip"><img src="media/waf-photo-4.jpg" alt="Recording in the co-branded studio at World Aviation Festival" width="799" height="1066" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="guests">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Who sits down with us</span>
+        <h2 class="h2">The people your delegates came to hear.</h2>
+        <p class="lede">Chief executives, directors general and founders from airlines, airports and the companies that supply them.</p>
+      </div>
+      <div class="guests">
+        <figure class="guest"><div class="ph"><img src="guests/jozsef-varadi.jpg" alt="József Váradi" width="900" height="1200" loading="lazy"></div><div class="n">József Váradi</div><div class="r">CEO · Wizz Air</div></figure>
+        <figure class="guest"><div class="ph"><img src="guests/david-neeleman.jpg" alt="David Neeleman" width="900" height="1200" loading="lazy"></div><div class="n">David Neeleman</div><div class="r">Founder &amp; CEO · Breeze Airways</div></figure>
+        <figure class="guest"><div class="ph"><img src="guests/nejib-ben-khedher.jpg" alt="Nejib Ben-Khedher" width="900" height="1200" loading="lazy"></div><div class="n">Nejib Ben-Khedher</div><div class="r">Senior Vice President · Emirates Skywards</div></figure>
+        <figure class="guest"><div class="ph"><img src="guests/mike-nakornkhet.jpg" alt="Mike Nakornkhet" width="900" height="1200" loading="lazy"></div><div class="n">Mike Nakornkhet</div><div class="r">CEO · San Francisco International Airport</div></figure>
+        <figure class="guest"><div class="ph"><img src="guests/warwick-brady.jpg" alt="Warwick Brady" width="900" height="1200" loading="lazy"></div><div class="n">Warwick Brady</div><div class="r">CEO &amp; President · Swissport</div></figure>
+        <figure class="guest"><div class="ph"><img src="guests/george-kamal.jpg" alt="George Kamal" width="900" height="1200" loading="lazy"></div><div class="n">George Kamal</div><div class="r">CEO · Kenya Airways</div></figure>
+        <figure class="guest"><div class="ph"><img src="guests/bjorn-tore-larsen.jpg" alt="Bjørn Tore Larsen" width="900" height="1200" loading="lazy"></div><div class="n">Bjørn Tore Larsen</div><div class="r">CEO · Norse Atlantic Airways</div></figure>
+        <figure class="guest"><div class="ph"><img src="guests/paul-griffiths.jpg" alt="Paul Griffiths" width="900" height="1200" loading="lazy"></div><div class="n">Paul Griffiths</div><div class="r">CEO · Dubai Airports</div></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="episodes">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow brass">What you get back</span>
+        <h2 class="h2">Finished episodes, not raw footage.</h2>
+        <p class="lede">Every conversation is edited, titled and published as a full video episode. These are recent ones. Each opens on YouTube.</p>
+      </div>
+      <div class="strip" tabindex="0" aria-label="Recent episodes, scroll sideways">
+        <a class="ep" href="https://www.youtube.com/watch?v=o_GdxC31YH8" target="_blank" rel="noopener"><img src="guests/auto/art-oGdxC31YH8.jpg" alt="" width="900" height="506" loading="lazy"><div class="b"><div class="t">If we don't change, we're dead</div><div class="m">Willie Walsh · IATA</div><div class="w">Watch →</div></div></a>
+        <a class="ep" href="https://www.youtube.com/watch?v=izWoxjCAMnU" target="_blank" rel="noopener"><img src="guests/auto/art-izWoxjCAMnU.jpg" alt="" width="900" height="506" loading="lazy"><div class="b"><div class="t">We are on the cusp of a revolution</div><div class="m">Paul Griffiths · Dubai Airports</div><div class="w">Watch →</div></div></a>
+        <a class="ep" href="https://www.youtube.com/watch?v=RbA5V7o5m2A" target="_blank" rel="noopener"><img src="guests/auto/art-RbA5V7o5m2A.jpg" alt="" width="900" height="506" loading="lazy"><div class="b"><div class="t">The rise of premium travel</div><div class="m">Heather Garboden · American Airlines</div><div class="w">Watch →</div></div></a>
+        <a class="ep" href="https://www.youtube.com/watch?v=oD2LHG1iNto" target="_blank" rel="noopener"><img src="guests/auto/art-oD2LHG1iNto.jpg" alt="" width="900" height="506" loading="lazy"><div class="b"><div class="t">Someone has to challenge the big boys</div><div class="m">David Neeleman · Breeze Airways</div><div class="w">Watch →</div></div></a>
+        <a class="ep" href="https://www.youtube.com/watch?v=BHAhQ4PfW1Y" target="_blank" rel="noopener"><img src="guests/auto/art-BHAhQ4PfW1Y.jpg" alt="" width="900" height="506" loading="lazy"><div class="b"><div class="t">What does it take to be the CEO of San Francisco Airport?</div><div class="m">Mike Nakornkhet · SFO</div><div class="w">Watch →</div></div></a>
+        <a class="ep" href="https://www.youtube.com/watch?v=KeLAWzbWn5w" target="_blank" rel="noopener"><img src="guests/auto/art-KeLAWzbWn5w.jpg" alt="" width="900" height="506" loading="lazy"><div class="b"><div class="t">Inside Star Alliance: the future of airline loyalty</div><div class="m">Ambar Franco &amp; Nadine Kindler · Star Alliance</div><div class="w">Watch →</div></div></a>
+        <a class="ep" href="https://www.youtube.com/watch?v=8VDD8wWJehQ" target="_blank" rel="noopener"><img src="guests/auto/art-8VDD8wWJehQ.jpg" alt="" width="900" height="506" loading="lazy"><div class="b"><div class="t">You are going to get knocked out</div><div class="m">József Váradi · Wizz Air</div><div class="w">Watch →</div></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="audience">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Who is watching</span>
+        <h2 class="h2">An audience that works in aviation.</h2>
+        <p class="lede">The show is watched and shared by people inside the industry. These are the numbers behind every episode we publish for your event.</p>
+      </div>
+      <div class="aud">
+        <div class="aud-col">
+          <h3>YouTube</h3>
+          <dl>
+            <div class="row"><dt>90K+</dt><dd>Total views</dd></div>
+            <div class="row"><dt>~1,600</dt><dd>Average views per full episode</dd></div>
+            <div class="row"><dt>3K+</dt><dd>Views on our stronger episodes</dd></div>
+            <div class="row"><dt>19K+</dt><dd>Views on our top episode</dd></div>
+            <div class="row"><dt>50–60</dt><dd>Average watch hours per episode</dd></div>
+          </dl>
+        </div>
+        <div class="aud-col">
+          <h3>LinkedIn</h3>
+          <dl>
+            <div class="row"><dt>11K+</dt><dd>Combined network across hosts and channel</dd></div>
+            <div class="row"><dt>1,698</dt><dd>Channel subscribers</dd></div>
+          </dl>
+        </div>
+        <div class="aud-col">
+          <h3>Spotify</h3>
+          <dl>
+            <div class="row"><dt>+500%</dt><dd>Audience growth, year on year</dd></div>
+            <div class="row"><dt>15</dt><dd>Countries with listeners</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="formats">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow amber">Ways to work together</span>
+        <h2 class="h2">Three formats, sized to your event.</h2>
+      </div>
+      <div class="formats">
+        <article class="fmt">
+          <div class="k">The full event</div>
+          <h3>Official podcast partner</h3>
+          <p>The studio is on your show floor for every day of the event. This is the model we run with World Aviation Festival.</p>
+          <ul><li>Studio on site throughout</li><li>Guest list planned with your team</li><li>A full run of episodes after the event</li></ul>
+          <button type="button" data-format="Official podcast partner">Ask about this format →</button>
+        </article>
+        <article class="fmt">
+          <div class="k">One day on site</div>
+          <h3>Studio day</h3>
+          <p>A single day of recording at a general meeting, summit or airshow. It suits a short, senior guest list.</p>
+          <ul><li>One day of recording</li><li>A handful of headline guests</li><li>Episodes released after the event</li></ul>
+          <button type="button" data-format="Studio day">Ask about this format →</button>
+        </article>
+        <article class="fmt">
+          <div class="k">Before the doors open</div>
+          <h3>Run-up series</h3>
+          <p>Episodes with your headline speakers, released in the weeks before the event to build anticipation for the programme.</p>
+          <ul><li>Recorded before the event</li><li>Released in the run-up</li><li>Can lead into a studio on site</li></ul>
+          <button type="button" data-format="Run-up series">Ask about this format →</button>
+        </article>
+      </div>
+      <div class="fits">
+        <span class="lead">A fit for</span>
+        <span class="chip">Airshows</span>
+        <span class="chip">Annual general meetings</span>
+        <span class="chip">Trade shows and exhibitions</span>
+        <span class="chip">Festivals and summits</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="questions">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow brass">Questions organisers ask</span>
+        <h2 class="h2">The practical side.</h2>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>What do you need from us?</summary>
+          <div class="a">A space on or near the show floor, power, and early sight of your speaker schedule. We bring everything else.</div>
+        </details>
+        <details>
+          <summary>Who chooses the guests?</summary>
+          <div class="a">We build the list together. You know who is speaking and who your sponsors want to put forward. We know which conversations our audience watches.</div>
+        </details>
+        <details>
+          <summary>When do the episodes come out?</summary>
+          <div class="a">After the event, one at a time, so your event keeps appearing in the industry's feeds for months instead of a single week.</div>
+        </details>
+        <details>
+          <summary>What does it cost?</summary>
+          <div class="a">It depends on the format and the length of the event. Tell us about yours and we will come back with a proposal.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section enq" id="enquire">
+    <div class="wrap enq-grid">
+      <div>
+        <span class="eyebrow amber">Start the conversation</span>
+        <h2>Bring the studio to your event.</h2>
+        <p class="lede">Tell us which event, when and where. We will reply with what a partnership could look like.</p>
+        <p class="direct">Or write to us directly<b>raza.ali@theflyinghighclub.com</b></p>
+      </div>
+      <form class="form" id="evForm" novalidate>
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="fields">
+          <div class="field"><label for="ev-name">Your name</label><input id="ev-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="ev-email">Work email</label><input id="ev-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="ev-org">Organisation</label><input id="ev-org" name="organisation" type="text" autocomplete="organization" required></div>
+          <div class="field"><label for="ev-event">Event name</label><input id="ev-event" name="event" type="text" required></div>
+          <div class="field"><label for="ev-when">Dates and location</label><input id="ev-when" name="when" type="text" placeholder="e.g. 3 to 5 June, Dubai"></div>
+          <div class="field"><label for="ev-format">Format</label>
+            <select id="ev-format" name="format"><option>Not sure yet</option><option>Official podcast partner</option><option>Studio day</option><option>Run-up series</option></select>
+          </div>
+          <div class="field full"><label for="ev-msg">Anything else we should know</label><textarea id="ev-msg" name="message"></textarea></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-amber" type="submit">Send enquiry</button>
+          <span class="form-msg" id="evMsg" role="status"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span>The Flying High Club · The aviation industry's video podcast</span>
+    <nav aria-label="Elsewhere">
+      <a href="/">Main site</a>
+      <a href="https://www.youtube.com/@TheFlyingHighClub/videos" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://open.spotify.com/show/4cdbL0Sl4aMqkJ8XMLs4x9" target="_blank" rel="noopener">Spotify</a>
+      <a href="https://www.linkedin.com/company/the-flying-high-club/" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var KEY = 'b746c681-5807-4404-ab82-5ab135a8a12c', SEND_TO = 'raza.ali@theflyinghighclub.com';
+
+  var select = document.getElementById('ev-format');
+  document.querySelectorAll('[data-format]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      select.value = b.dataset.format;
+      document.getElementById('enquire').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(function () { document.getElementById('ev-name').focus({ preventScroll: true }); }, 600);
+    });
+  });
+
+  var vids = document.querySelectorAll('video[data-loop]');
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (still) { vids.forEach(function (v) { v.controls = true; }); }
+  else if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { var p = e.target.play(); if (p && p.catch) p.catch(function () {}); } else { e.target.pause(); } });
+    }, { threshold: 0.25 });
+    vids.forEach(function (v) { io.observe(v); });
+  }
+
+  var form = document.getElementById('evForm'), msg = document.getElementById('evMsg');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var bad = Array.prototype.find.call(form.elements, function (el) { return el.willValidate && !el.checkValidity(); });
+    if (bad) { msg.className = 'form-msg err'; msg.textContent = 'Please fill in your name, work email, organisation and event.'; bad.focus(); return; }
+    if (form.botcheck && form.botcheck.checked) return;
+    var btn = form.querySelector('button[type=submit]');
+    var val = function (id) { return document.getElementById(id).value.trim(); };
+    var data = { 'Your name': val('ev-name'), 'Work email': val('ev-email'), 'Organisation': val('ev-org'), 'Event name': val('ev-event'),
+                 'Dates and location': val('ev-when'), 'Format': val('ev-format'), 'Message': val('ev-msg') };
+    btn.disabled = true; btn.textContent = 'Sending…'; msg.className = 'form-msg'; msg.textContent = '';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(Object.assign({ access_key: KEY, subject: 'FHC website — Event partnership — ' + data['Event name'],
+        from_name: 'The Flying High Club website', replyto: data['Work email'], form: 'Event partnerships' }, data))
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (o) { if (!r.ok || o.success === false) throw new Error('fail'); }); })
+      .then(function () { form.reset(); msg.className = 'form-msg ok'; msg.textContent = "Thanks. We'll be in touch shortly."; btn.textContent = 'Sent'; })
+      .catch(function () { btn.disabled = false; btn.textContent = 'Send enquiry'; msg.className = 'form-msg err';
+        msg.textContent = "Sorry, that didn't send. Please email " + SEND_TO + '.'; });
+  });
+})();
+</script>
+</body>
+</html>
