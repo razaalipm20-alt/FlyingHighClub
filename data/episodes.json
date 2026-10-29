@@ -399,7 +399,6 @@
     "photoSource": "upload"
   },
   {
-    "youtubeOnly": true,
     "ytTitle": "There is a SIGNIFICANT Gap in women in Aviation and WE NEED to Change That NOW!",
     "title": "There's a significant gap in women in aviation — and we need to change that now",
     "guest": "Marion Geoffroy",
@@ -414,7 +413,8 @@
     "artwork": "guests/auto/art-jNhmpyjccOQ.jpg",
     "ytPublished": "2026-01-22",
     "ytSeconds": 1935,
-    "photoSource": "upload"
+    "photoSource": "upload",
+    "guid": "3c16d5c4-a6b6-4090-b30d-adea55cf3c26"
   },
   {
     "youtubeOnly": true,
